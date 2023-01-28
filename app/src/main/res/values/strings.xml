@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Parkify</string>
+    <string-array name="array_disponibilita">
+        <item>Variabile</item>
+        <item>Molta</item>
+        <item>Poca</item>
+    </string-array>
 </resources>

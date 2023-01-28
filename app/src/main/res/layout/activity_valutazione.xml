@@ -4,6 +4,200 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ValutazioneActivity">
+    tools:context=".ValutazioneActivity"
+    android:theme="@style/AppTheme" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+
+            android:gravity="center"
+            android:text="Disponibilità"
+            android:textSize="35sp"
+
+            android:textColor="@color/black" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+
+                android:text="Mattina\n(6:00-14:00)"
+                android:lines="2"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordo_e_sfondo_grigio"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="15dp"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/s_dispMattina"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:overlapAnchor="false" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+
+                android:text="Sera\n(15:00-21:00)"
+                android:lines="2"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordo_e_sfondo_grigio"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="15dp"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/s_dispSera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:overlapAnchor="false" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+
+                android:text="Notte\n(22:00-5:00)"
+                android:lines="2"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bordo_e_sfondo_grigio"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="15dp"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/s_dispNotte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:overlapAnchor="false" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="40dp"
+            android:background="@drawable/bordo_nero">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="5dp"
+
+                android:gravity="center"
+                android:text="Sicurezza"
+                android:textSize="30sp"
+
+                android:textColor="@color/black" />
+
+            <RatingBar
+                android:id="@+id/simpleRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:progressTint="@color/rating_star_yellow"
+                android:secondaryProgressTint="@color/rating_star_yellow"
+
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="50dp"
+
+            android:gravity="center"
+            android:text="Commento"
+            android:textSize="30sp"
+
+            android:textColor="@color/black" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="50dp"
+            android:background="@drawable/rounded_shape"
+
+            android:gravity="top"
+            android:padding="5dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+
+            android:text="Conferma"
+            android:textSize="40sp"
+
+            android:backgroundTint="@color/black"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
