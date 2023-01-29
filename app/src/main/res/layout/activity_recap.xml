@@ -30,7 +30,7 @@
             android:layout_height="wrap_content">
 
             <RadioGroup
-                android:id="@+id/toggle"
+                android:id="@+id/toggleResult"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -78,7 +78,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/s_mattina"
+            android:id="@+id/s_mattinaResult"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="5dp"
             android:visibility="visible" >
@@ -94,29 +94,21 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/s_dispMattinaResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="15dp"
-                android:background="@drawable/bordo_e_sfondo_grigio"
-                android:padding="10dp">
-
-                <Spinner
-                    android:id="@+id/s_dispMattina"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown" />
-
-            </RelativeLayout>
+                android:background="@drawable/bordo_e_sfondo_grigio"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fs_mattina"
+            android:id="@+id/fs_mattinaResult"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="5dp"
             android:visibility="gone" >
@@ -132,29 +124,21 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/fs_dispMattinaResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="15dp"
-                android:background="@drawable/bordo_e_sfondo_grigio"
-                android:padding="10dp">
-
-                <Spinner
-                    android:id="@+id/fs_dispMattina"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown" />
-
-            </RelativeLayout>
+                android:background="@drawable/bordo_e_sfondo_grigio" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/s_sera"
+            android:id="@+id/s_seraResult"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="5dp"
             android:visibility="visible" >
@@ -170,29 +154,21 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/s_dispSeraResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="15dp"
-                android:background="@drawable/bordo_e_sfondo_grigio"
-                android:padding="10dp">
-
-                <Spinner
-                    android:id="@+id/s_dispSera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown" />
-
-            </RelativeLayout>
+                android:background="@drawable/bordo_e_sfondo_grigio" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fs_sera"
+            android:id="@+id/fs_seraResult"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="5dp"
             android:visibility="gone" >
@@ -208,29 +184,21 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/fs_dispSeraResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="15dp"
-                android:background="@drawable/bordo_e_sfondo_grigio"
-                android:padding="10dp">
-
-                <Spinner
-                    android:id="@+id/fs_dispSera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown" />
-
-            </RelativeLayout>
+                android:background="@drawable/bordo_e_sfondo_grigio" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/s_notte"
+            android:id="@+id/s_notteResult"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="5dp"
             android:visibility="visible">
@@ -246,29 +214,21 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/s_dispNotteResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="15dp"
-                android:background="@drawable/bordo_e_sfondo_grigio"
-                android:padding="10dp">
-
-                <Spinner
-                    android:id="@+id/s_dispNotte"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown" />
-
-            </RelativeLayout>
+                android:background="@drawable/bordo_e_sfondo_grigio" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fs_notte"
+            android:id="@+id/fs_notteResult"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="5dp"
             android:visibility="gone">
@@ -284,22 +244,14 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/fs_dispNotteResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="15dp"
-                android:background="@drawable/bordo_e_sfondo_grigio"
-                android:padding="10dp">
-
-                <Spinner
-                    android:id="@+id/fs_dispNotte"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown" />
-
-            </RelativeLayout>
+                android:background="@drawable/bordo_e_sfondo_grigio" />
 
         </RelativeLayout>
 
@@ -325,7 +277,7 @@
                 android:textSize="30sp" />
 
             <RatingBar
-                android:id="@+id/ratingSicurezza"
+                android:id="@+id/ratingSicurezzaResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -348,8 +300,8 @@
 
             android:textSize="30sp" />
 
-        <EditText
-            android:id="@+id/commento"
+        <TextView
+            android:id="@+id/commentoResult"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginHorizontal="50dp"
@@ -358,19 +310,6 @@
 
             android:gravity="top"
             android:padding="5dp" />
-
-        <Button
-            android:id="@+id/bottoneConferma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginTop="15dp"
-
-            android:backgroundTint="@color/black"
-            android:text="Conferma"
-
-            android:textSize="40sp" />
 
     </LinearLayout>
 

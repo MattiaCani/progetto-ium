@@ -7,6 +7,5 @@
     android:textSize="20sp"
 
     android:background="@drawable/effetto_ripple"
-    android:clickable="true"
 
     android:theme="@style/AppTheme"/>

@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#E5E8E3</color>
     <color name="rating_star_yellow">#FDCC0D</color>
+    <color name="transparent">#00F00000</color>
+    <color name="dark_red">#AF3636</color>
 </resources>
