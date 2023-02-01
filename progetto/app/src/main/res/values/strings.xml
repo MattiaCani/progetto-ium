@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">progetto</string>
-    <string name="registration_link"><u>Nuovo utente? Registrati</u></string>
-    <string name="login_link"><u>Già iscritto? Accedi</u></string>
-</resources>
