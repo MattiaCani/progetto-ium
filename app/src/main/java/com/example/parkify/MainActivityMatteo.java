@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+/********************************* Navbar **********************************/
 //        navigationView = findViewById(R.id.navBar);
 //        Fragment fragment = new Fragment();
 //        navigationView.setSelectedItemId(R.id.nav_search);
@@ -127,5 +127,5 @@ public class MainActivity extends AppCompatActivity {
 //    private void replaceFragment(Fragment new_fragment){
 //            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new_fragment).commit();
 //    }
-
+/*************************************************************************/
 }
