@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/login_bk"
+    android:orientation="vertical"
+    tools:context="com.example.progettoIUMcorretto.MainActivity">
+
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context="com.example.progettoIUMcorretto.SearchFragment">-->
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@drawable/login_bk"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        >-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="4dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="4dp"-->
+<!--            android:orientation="vertical">-->
+
+            <!--<TextView
+                style="@style/loginHeader"
+                android:layout_width="227dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:text="Cerca Parcheggio"
+                android:textSize="25dp" />-->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/card_search">
+
+    <androidx.appcompat.widget.SearchView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/searchView"
+          android:queryHint="Inserisci nome parcheggio"
+          android:iconifiedByDefault="false"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginTop="10dp"
+          app:queryHint="Cerca un parcheggio"
+
+          android:background="@drawable/search_bar_bk"
+          />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="597dp"
+        android:layout_below="@+id/card_search"
+        android:layout_marginTop="6dp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+
+<!--            <Space-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="100dp">-->
+
+<!--            </Space>-->
+
+            <!--<Button
+                android:id="@+id/cirLoginButton"
+                style="@style/loginButton"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="Cerca"
+                android:textSize="20dp" /> -->
+
+<!--            <Space-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="220dp">-->
+<!--            </Space>-->
+
+
+
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+</RelativeLayout>

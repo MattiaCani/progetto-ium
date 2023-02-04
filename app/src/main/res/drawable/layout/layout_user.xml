@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.progettoIUMcorretto.UserHomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/admin_bk"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="-96dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/loginHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:gravity="center"
+                android:text="Home"                 />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></Space>
+
+            <TextView
+                style="@style/headerText"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Benvenuto Matteo!"
+                android:textColor="@color/blackTextColor">
+
+            </TextView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></Space>
+
+            <TextView
+                android:id="@+id/UsernameHome"
+                style="@style/dataUser"
+                android:text="Username:"
+                android:textColor="@color/blackTextColor" />
+
+            <TextView
+                android:id="@+id/UserPassword"
+                style="@style/dataUser"
+                android:text="Password:"
+                android:textColor="@color/blackTextColor" />
+
+            <TextView
+                android:id="@+id/UserCitta"
+                style="@style/dataUser"
+                android:text="Città:"
+                android:textColor="@color/blackTextColor" />
+
+            <TextView
+                android:id="@+id/UserData"
+                style="@style/dataUser"
+                android:text="Data di nascita:"
+                android:textColor="@color/blackTextColor" />
+
+
+            <TextView
+                android:id="@+id/EditPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="modifica password"
+                android:textColor="#004AFF"
+                android:textSize="@dimen/newsMoreTextSize" />
+<!--
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="10dp"
+                android:checked="true"
+                android:switchMinWidth="56dp"
+                android:text="Switch1:"
+                android:textOff="OFF"
+                android:textOn="ON" />
+-->
+
+            <Button
+                android:id="@+id/cirLogoutButton"
+                style="@style/logoutButton"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="Logout"
+                android:textSize="18sp"
+                android:layout_marginBottom="45dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
