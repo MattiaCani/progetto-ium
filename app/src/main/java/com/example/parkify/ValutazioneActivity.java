@@ -5,16 +5,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.text.HtmlCompat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -23,8 +31,7 @@ import android.widget.TextView;
 
 public class ValutazioneActivity extends AppCompatActivity {
 
-    RelativeLayout sMattina, sSera, sNotte;
-    RelativeLayout fsMattina, fsSera, fsNotte;
+    LinearLayout settimanaSpinners, fineSettimanaSpinners;
 
     Spinner spinner_sMattina, spinner_sSera, spinner_sNotte;
     Spinner spinner_fsMattina, spinner_fsSera, spinner_fsNotte;
@@ -34,6 +41,7 @@ public class ValutazioneActivity extends AppCompatActivity {
     Button bottoneConferma;
 
     Valutazione valutazioneUtente;
+    Person utente;
 
     public static final String VALUTAZIONE_EXTRA = "com.example.parkify.Valutazione";
 
@@ -52,18 +60,25 @@ public class ValutazioneActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         //actionBar.hide();
 
+        //Cambia il testo e il colore della actionbar
+        if (actionBar != null) {
+            actionBar.setTitle("Interrompi valutazione");
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF000000")));
+        }
+
+        //Cambia il colore della barra di notifiche
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor("#FF000000"));
+        }
+
         //Mostra un pulsante di ritorno nella actionbar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Cambia tra la disponibilità Settimana e Fine Settimana
-        sMattina = findViewById(R.id.s_mattina);
-        fsMattina = findViewById(R.id.fs_mattina);
-
-        sSera = findViewById(R.id.s_sera);
-        fsSera = findViewById(R.id.fs_sera);
-
-        sNotte = findViewById(R.id.s_notte);
-        fsNotte = findViewById(R.id.fs_notte);
+        settimanaSpinners = findViewById(R.id.settimanaSpinners);
+        fineSettimanaSpinners = findViewById(R.id.fineSettimanaSpinners);
 
         RadioGroup radioGroup = findViewById(R.id.toggle);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
@@ -72,24 +87,12 @@ public class ValutazioneActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.settimana:
-                        sMattina.setVisibility(View.VISIBLE);
-                        fsMattina.setVisibility(View.GONE);
-
-                        sSera.setVisibility(View.VISIBLE);
-                        fsSera.setVisibility(View.GONE);
-
-                        sNotte.setVisibility(View.VISIBLE);
-                        fsNotte.setVisibility(View.GONE);
+                        settimanaSpinners.setVisibility(View.VISIBLE);
+                        fineSettimanaSpinners.setVisibility(View.GONE);
                         break;
                     case R.id.fineSettimana:
-                        sMattina.setVisibility(View.GONE);
-                        fsMattina.setVisibility(View.VISIBLE);
-
-                        sSera.setVisibility(View.GONE);
-                        fsSera.setVisibility(View.VISIBLE);
-
-                        sNotte.setVisibility(View.GONE);
-                        fsNotte.setVisibility(View.VISIBLE);
+                        settimanaSpinners.setVisibility(View.GONE);
+                        fineSettimanaSpinners.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -137,7 +140,6 @@ public class ValutazioneActivity extends AppCompatActivity {
                 startActivity(paginaRecap);
             }
         });
-
     }
 
     //Meccanismo per il pulsante di ritorno

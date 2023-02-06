@@ -3,6 +3,8 @@ package com.example.parkify;
 import java.io.Serializable;
 
 public class Valutazione implements Serializable {
+    private Person utente;
+
     private String sMattina, sSera, sNotte;
     private String fsMattina, fsSera, fsNotte;
     private Float ratingSicurezza;
@@ -19,6 +21,14 @@ public class Valutazione implements Serializable {
         this.fsNotte = fsNotte;
         this.ratingSicurezza = ratingSicurezza;
         this.commento = commento;
+    }
+
+    public Person getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Person utente) {
+        this.utente = utente;
     }
 
     public String getsMattina() {

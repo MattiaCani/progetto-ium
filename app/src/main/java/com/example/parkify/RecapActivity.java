@@ -5,9 +5,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -20,14 +26,12 @@ import java.io.Serializable;
 
 public class RecapActivity extends AppCompatActivity {
 
-    RelativeLayout sMattina, sSera, sNotte;
-    RelativeLayout fsMattina, fsSera, fsNotte;
-
     TextView spinner_sMattina, spinner_sSera, spinner_sNotte;
     TextView spinner_fsMattina, spinner_fsSera, spinner_fsNotte;
 
     RatingBar ratingSicurezzaResult;
     TextView commentoResult;
+    Button bottoneConfermaRecap;
 
     Valutazione valutazioneUtente;
 
@@ -39,48 +43,21 @@ public class RecapActivity extends AppCompatActivity {
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
 
+        //Cambia il testo e il colore della actionbar
+        if (actionBar != null) {
+            actionBar.setTitle("Modifica valutazione");
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF000000")));
+        }
+
+        //Cambia il colore della barra di notifiche
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor("#FF000000"));
+        }
+
         //Mostra un pulsante di ritorno nella actionbar
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //Cambia tra la disponibilità Settimana e Fine Settimana
-        sMattina = findViewById(R.id.s_mattinaResult);
-        fsMattina = findViewById(R.id.fs_mattinaResult);
-
-        sSera = findViewById(R.id.s_seraResult);
-        fsSera = findViewById(R.id.fs_seraResult);
-
-        sNotte = findViewById(R.id.s_notteResult);
-        fsNotte = findViewById(R.id.fs_notteResult);
-
-        RadioGroup radioGroup = findViewById(R.id.toggleResult);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.settimana:
-                        sMattina.setVisibility(View.VISIBLE);
-                        fsMattina.setVisibility(View.GONE);
-
-                        sSera.setVisibility(View.VISIBLE);
-                        fsSera.setVisibility(View.GONE);
-
-                        sNotte.setVisibility(View.VISIBLE);
-                        fsNotte.setVisibility(View.GONE);
-                        break;
-                    case R.id.fineSettimana:
-                        sMattina.setVisibility(View.GONE);
-                        fsMattina.setVisibility(View.VISIBLE);
-
-                        sSera.setVisibility(View.GONE);
-                        fsSera.setVisibility(View.VISIBLE);
-
-                        sNotte.setVisibility(View.GONE);
-                        fsNotte.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-        });
 
         //Recupero dei dati
         spinner_sMattina = findViewById(R.id.s_dispMattinaResult);
@@ -94,6 +71,10 @@ public class RecapActivity extends AppCompatActivity {
 
         ratingSicurezzaResult = findViewById(R.id.ratingSicurezzaResult);
         commentoResult = findViewById(R.id.commentoResult);
+        bottoneConfermaRecap = findViewById(R.id.bottoneConfermaRecap);
+
+        //Permette di scorrere il testo nella textview del commento
+        commentoResult.setMovementMethod(new ScrollingMovementMethod());
 
         //Visualizzazione dei dati
         Intent intent = getIntent();
@@ -105,6 +86,16 @@ public class RecapActivity extends AppCompatActivity {
             valutazioneUtente = new Valutazione();
 
         updateTextViews();
+
+        //Conferma i dati inseriti e passa alla activity di recap
+        bottoneConfermaRecap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Metodo per caricare la valutazione nel database/o dove ci sono le altre valutazioni
+
+                //Reindirizza a quale activity ????
+            }
+        });
     }
 
     //Tasto di ritorno
