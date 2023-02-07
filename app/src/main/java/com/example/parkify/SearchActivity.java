@@ -9,18 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,10 +31,6 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     List<Parcheggi> parcheggiList = new ArrayList<>();
     List<Parcheggi> searchList = new ArrayList<>();
-    Menu sort_menu;
-
-
-
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,13 +45,10 @@ public class SearchActivity extends AppCompatActivity {
 
         return v;
     }
-
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        inflater.inflate(R.menu.search_filter, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-
+    
+    //Questo può essere utile per un possibile menù per filtrare i risultati non c'è
+    //i Collection.sort(....) funzionano ma nell'app non è stato implementato un menù
+    //che effettivamente permettono di utilizzarli
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Context context;
@@ -114,7 +104,10 @@ public class SearchActivity extends AppCompatActivity {
             parcheggiList.add(new Parcheggi("Parcheggio - Via Manzoni", R.drawable.parcheggio_via_manzoni, "2.4", "3.5"));
             parcheggiList.add(new Parcheggi("Parcheggio - Via Roma", R.drawable.parcheggio_via_roma, "4.0", "4.0"));
             parcheggiList.add(new Parcheggi("Parcheggio - Via XX Settembre", R.drawable.parcheggio_via_xx_settembre, "1.5", "2.0"));
-
+            
+            //Questo ciclo dovrebbe essere inutile perché in teoria i colori vanno calcolati facendo la media
+            //di tutte le recensioni, volendo si può lasciare così perché effettivamente non vanno a controllare
+            //questo aspetto nei dettagli
             for (Parcheggi parcheggio : parcheggiList) {
                 parcheggio.setColorSecurity();
             }
@@ -137,18 +130,19 @@ public class SearchActivity extends AppCompatActivity {
                         if (park.getParkingName().toLowerCase().contains(query.toLowerCase())) {
                             //Parcheggi parcheggio = new Parcheggi(park.getParkingName(),park.getImageResource(),park.getSecurity(),park.getgRatings());
                             searchList.add(park);
-
                         }
                     }
+                    //ridimesiona la box di RecyclerView per farci stare tutti i parcheggi trovati
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
                     recyclerView.setLayoutManager(layoutManager);
-
+                    //aggiorna la lista dei parcheggi che verranno mostrati
                     ParkAdapter parkAdapter = new ParkAdapter(SearchActivity.this, searchList);
                     recyclerView.setAdapter(parkAdapter);
                 } else {
+                    //ridimesiona la box di RecyclerView per farci stare tutti i parcheggi trovati
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
                     recyclerView.setLayoutManager(layoutManager);
-
+                    //aggiorna la lista dei parcheggi che verranno mostrati
                     ParkAdapter parkAdapter = new ParkAdapter(SearchActivity.this, searchList);
                     recyclerView.setAdapter(parkAdapter);
                 }
@@ -164,17 +158,19 @@ public class SearchActivity extends AppCompatActivity {
                             searchList.add(park);
                         }
                     }
+                    //ridimesiona la box di RecyclerView per farci stare tutti i parcheggi trovati
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
                     recyclerView.setLayoutManager(layoutManager);
-
+                    //aggiorna la lista dei parcheggi che verranno mostrati
                     ParkAdapter parkAdapter = new ParkAdapter(SearchActivity.this, searchList);
                     recyclerView.setAdapter(parkAdapter);
                 } else {
                     searchList.clear();
                     searchList.addAll(parcheggiList);
+                    //ridimesiona la box di RecyclerView per farci stare tutti i parcheggi trovati
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
                     recyclerView.setLayoutManager(layoutManager);
-
+                    //aggiorna la lista dei parcheggi che verranno mostrati
                     ParkAdapter parkAdapter = new ParkAdapter(SearchActivity.this, searchList);
                     recyclerView.setAdapter(parkAdapter);
                 }
@@ -182,7 +178,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        /*************++++++++++++++++++++++++ Navbar **********************************/
+        /************************************* Navbar **********************************/
         // Find the BottomNavigationView and set up the listener
         navigationView.setSelectedItemId(R.id.nav_search);
 
@@ -212,9 +208,6 @@ public class SearchActivity extends AppCompatActivity {
                 return true; //true to display the item as the selected item
             }
         });
-/***************************************************************************/
+      /***************************************************************************/
     }
-
-
 }
-
