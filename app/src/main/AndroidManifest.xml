@@ -14,14 +14,14 @@
         android:theme="@style/AppTheme"
         tools:targetApi="tiramisu">
         <activity
-            android:name="com.example.progettoIUMcorretto.UserHomeActivity"
+            android:name=percorso.MappaActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.progettoIUMcorretto.MainActivity"
+            android:name="percorso.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="stateVisible|adjustPan">
 
@@ -37,7 +37,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.progettoIUMcorretto.SearchActivity"
+            android:name="percorso.SearchActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
