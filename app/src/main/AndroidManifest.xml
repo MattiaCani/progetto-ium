@@ -5,16 +5,27 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Parkify"
-        tools:targetApi="31">
+        android:theme="@style/AppTheme"
+        tools:targetApi="tiramisu">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name="com.example.progettoIUMcorretto.UserHomeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name="com.example.progettoIUMcorretto.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+
+            <!-- la riga 18 serve a non far strechare l'imagine in background -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,6 +35,24 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+        </activity>
+        <activity
+            android:name="com.example.progettoIUMcorretto.SearchActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.progettoIUMcorretto.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
