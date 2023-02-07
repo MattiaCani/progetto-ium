@@ -32,7 +32,7 @@ public class ParkAdapter extends RecyclerView.Adapter<ParkAdapter.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.preview_search, parent, false);
+        View view = layoutInflater.inflate(R.layout.preview_park_search, parent, false);
         MyHolder holder = new MyHolder(view);
         return holder;
     }
@@ -50,18 +50,15 @@ public class ParkAdapter extends RecyclerView.Adapter<ParkAdapter.MyHolder> {
     public int getItemCount() {
         return arrayPark.size();
     }
-    public void filteredList(List<Parcheggi> filterList){
 
-    }
 
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView parkingName, securityRate, generalRate;
         ImageView parkImg, dotColor;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            Parcheggi parkk;
             for(Parcheggi park : arrayPark) {
-                parkingName = itemView.findViewById(R.id.parking_name);
+                parkingName = itemView.findViewById(R.id.user_nickname);
                 parkImg = itemView.findViewById(R.id.park_img);
                 securityRate = itemView.findViewById(R.id.security_ratings);
                 generalRate = itemView.findViewById(R.id.rating_quality);

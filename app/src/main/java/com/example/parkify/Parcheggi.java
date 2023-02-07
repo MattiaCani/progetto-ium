@@ -2,10 +2,12 @@ package com.example.progettoIUMcorretto;
 
 import com.example.myapplication.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Parcheggi {
+public class Parcheggi implements Serializable {
     private String parkingName;
     private int imageResource;
     private String security;
@@ -28,6 +30,33 @@ public class Parcheggi {
         this.gRatings = gRatings;
         addToList();
     }
+    public static Comparator<Parcheggi> Parks_a_To_Z = new Comparator<Parcheggi>() {
+        @Override
+        public int compare(Parcheggi p1, Parcheggi p2) {
+            return p1.getParkingName().compareTo(p2.getParkingName());
+        }
+    };
+
+    public static Comparator<Parcheggi> Parks_z_To_A = new Comparator<Parcheggi>() {
+        @Override
+        public int compare(Parcheggi p1, Parcheggi p2) {
+            return p2.getParkingName().compareTo(p1.getParkingName());
+        }
+    };
+
+    public static Comparator<Parcheggi> Parks_mostSec = new Comparator<Parcheggi>() {
+        @Override
+        public int compare(Parcheggi p1, Parcheggi p2) {
+            return p1.getSecurity().compareTo(p2.getSecurity());
+        }
+    };
+
+    public static Comparator<Parcheggi> Parks_mostGrate = new Comparator<Parcheggi>() {
+        @Override
+        public int compare(Parcheggi p1, Parcheggi p2) {
+            return p1.getgRatings().compareTo(p2.getgRatings());
+        }
+    };
 
     public void addToList() {
         parcheggiList.add(this);
@@ -77,7 +106,7 @@ public class Parcheggi {
 
         if (avg >3.8){
             colorSecurity = R.drawable.dot_green;
-        }else if(avg >2.2 && avg <=3.8){
+        }else if(avg >=2.6 && avg <=3.8){
             colorSecurity= R.drawable.dot_orange;
         }else{
             colorSecurity = R.drawable.dot_red;
