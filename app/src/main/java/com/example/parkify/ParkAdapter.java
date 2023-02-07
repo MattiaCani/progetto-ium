@@ -6,15 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ParkAdapter extends RecyclerView.Adapter<ParkAdapter.MyHolder> {
 
@@ -31,12 +27,14 @@ public class ParkAdapter extends RecyclerView.Adapter<ParkAdapter.MyHolder> {
 
     @NonNull
     @Override
+    //Questo metodo inizializza l'interfaccia
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.preview_park_search, parent, false);
         MyHolder holder = new MyHolder(view);
         return holder;
     }
-
+    
+    //questo metodo riempie i campi dei parcheggi che vengono restituiti nella ricerca
     @Override
     public void onBindViewHolder(@NonNull ParkAdapter.MyHolder holder, int position) {
         holder.parkingName.setText((arrayPark.get(position).getParkingName()));
@@ -50,8 +48,9 @@ public class ParkAdapter extends RecyclerView.Adapter<ParkAdapter.MyHolder> {
     public int getItemCount() {
         return arrayPark.size();
     }
-
-
+    
+    //Questo metodo restituisce la lista dei parcheggi che corrispondono 
+    //ai parametri di ricerca (per nome)
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView parkingName, securityRate, generalRate;
         ImageView parkImg, dotColor;
