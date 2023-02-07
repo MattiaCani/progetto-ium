@@ -48,7 +48,7 @@ public class SearchActivity extends AppCompatActivity {
     
     //Questo può essere utile per un possibile menù per filtrare i risultati non c'è
     //i Collection.sort(....) funzionano ma nell'app non è stato implementato un menù
-    //che effettivamente permettono di utilizzarli
+    //che effettivamente permette di utilizzarli
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Context context;
@@ -189,13 +189,12 @@ public class SearchActivity extends AppCompatActivity {
                 Intent intent ;
                 switch (item.getItemId()) {
                     case R.id.nav_map:
-                        intent = new Intent(SearchActivity.this, LoginActivity.class);
+                        intent = new Intent(SearchActivity.this, MappaActivity.class);
                         intent.putExtra(MainActivity.PARK, (Serializable) parcheggiList);
                         startActivity(intent);
 
                         break;
-                    case R.id.nav_search:
-                        //Provare a mettere qualcosa per usare i filtri
+                    case R.id.nav_search:                        
                         break;
                     case R.id.nav_home:
                         intent = new Intent(SearchActivity.this, UserHomeActivity.class);
