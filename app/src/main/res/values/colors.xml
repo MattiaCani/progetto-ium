@@ -11,5 +11,15 @@
     <color name="rating_star_yellow">#FDCC0D</color>
     <color name="transparent">#00F00000</color>
     <color name="dark_red">#AF3636</color>
-    <color name="green">#489755</color>
+    <color name="confirm_green">#489755</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_700">#616161</color>
+    <color name="grey_900">#212121</color>
+    <color name="blue_900">#0D47A1</color>
+    <color name="yellow_500">#FFEB3B</color>
+    <color name="orange">#EA985A</color>
+    <color name="grey">#BABDBD</color>
+    <color name="green">#669900</color>
+    <color name="red">#FF0000</color>
 </resources>

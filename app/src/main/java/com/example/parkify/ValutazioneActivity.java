@@ -1,5 +1,7 @@
 package com.example.parkify;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -14,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -29,10 +32,25 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.AggregateQuery;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.io.Serializable;
+
 public class ValutazioneActivity extends AppCompatActivity {
 
+    //Per il passaggio a un altra activity
+    public static final String VALUTAZIONE_EXTRA0 = "Valutazione";
+    public static final String VALUTAZIONE_EXTRA1 = "Parcheggio";
+
+    //Gestione spinners
     LinearLayout settimanaSpinners, fineSettimanaSpinners;
 
+    //Widget
     Spinner spinner_sMattina, spinner_sSera, spinner_sNotte;
     Spinner spinner_fsMattina, spinner_fsSera, spinner_fsNotte;
 
@@ -41,18 +59,15 @@ public class ValutazioneActivity extends AppCompatActivity {
     Button bottoneConferma;
 
     Valutazione valutazioneUtente;
-    Person utente;
-
-    public static final String VALUTAZIONE_EXTRA = "com.example.parkify.Valutazione";
+    Parcheggio infoParcheggio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_valutazione);
 
         //Imposta di default la modalità giorno
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_valutazione);
 
         valutazioneUtente = new Valutazione();
 
@@ -82,7 +97,6 @@ public class ValutazioneActivity extends AppCompatActivity {
 
         RadioGroup radioGroup = findViewById(R.id.toggle);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -97,6 +111,18 @@ public class ValutazioneActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Recupera i dati sul nome e id parcheggio
+        Intent intent = getIntent();
+        Serializable obj = intent.getSerializableExtra(HomepageActivity.HOMEPAGE_EXTRA);
+
+        if(obj instanceof Parcheggio)
+            infoParcheggio = (Parcheggio) obj;
+        else
+            infoParcheggio = new Parcheggio();
+
+        valutazioneUtente.setNomeParcheggio(infoParcheggio.getNomeParcheggio());
+        valutazioneUtente.setIdParcheggio(infoParcheggio.getIdParcheggio());
 
         //Inserimento dei dati nello spinner e specifica del layout
         spinner_sMattina = findViewById(R.id.s_dispMattina);
@@ -136,7 +162,8 @@ public class ValutazioneActivity extends AppCompatActivity {
                 updateValutazione();
 
                 Intent paginaRecap = new Intent(ValutazioneActivity.this, RecapActivity.class);
-                paginaRecap.putExtra(VALUTAZIONE_EXTRA, valutazioneUtente);
+                paginaRecap.putExtra(VALUTAZIONE_EXTRA0, valutazioneUtente);
+                paginaRecap.putExtra(VALUTAZIONE_EXTRA1, infoParcheggio);
                 startActivity(paginaRecap);
             }
         });
@@ -153,6 +180,7 @@ public class ValutazioneActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Aggiorna i dati della valutazione
     void updateValutazione (){
         String spinner_sMattina = this.spinner_sMattina.getSelectedItem().toString();
         this.valutazioneUtente.setsMattina(spinner_sMattina);

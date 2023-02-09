@@ -5,4 +5,7 @@
         <item>Molta</item>
         <item>Poca</item>
     </string-array>
+    <string name="registration_link"><u>Nuovo utente? Registrati</u></string>
+    <string name="login_link"><u>Già iscritto? Accedi</u></string>
+    <string name="title_activity_homepage">Homepage</string>
 </resources>

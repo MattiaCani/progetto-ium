@@ -1,5 +1,7 @@
 package com.example.parkify;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -22,10 +25,24 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.AggregateQuery;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecapActivity extends AppCompatActivity {
 
+    //Widget
     TextView spinner_sMattina, spinner_sSera, spinner_sNotte;
     TextView spinner_fsMattina, spinner_fsSera, spinner_fsNotte;
 
@@ -34,11 +51,15 @@ public class RecapActivity extends AppCompatActivity {
     Button bottoneConfermaRecap;
 
     Valutazione valutazioneUtente;
+    Parcheggio parcheggioValutato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recap);
+
+        //Collegamento al database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -76,14 +97,23 @@ public class RecapActivity extends AppCompatActivity {
         //Permette di scorrere il testo nella textview del commento
         commentoResult.setMovementMethod(new ScrollingMovementMethod());
 
-        //Visualizzazione dei dati
-        Intent intent = getIntent();
-        Serializable obj = intent.getSerializableExtra(ValutazioneActivity.VALUTAZIONE_EXTRA);
+        //Recupero delle info sulla valutazione
+        Intent intent0 = getIntent();
+        Serializable obj0 = intent0.getSerializableExtra(ValutazioneActivity.VALUTAZIONE_EXTRA0);
 
-        if(obj instanceof Valutazione)
-            valutazioneUtente = (Valutazione) obj;
+        if(obj0 instanceof Valutazione)
+            valutazioneUtente = (Valutazione) obj0;
         else
             valutazioneUtente = new Valutazione();
+
+        //Recupero delle info sul parcheggio
+        Intent intent1 = getIntent();
+        Serializable obj1 = intent1.getSerializableExtra(ValutazioneActivity.VALUTAZIONE_EXTRA1);
+
+        if(obj1 instanceof Parcheggio)
+            parcheggioValutato = (Parcheggio) obj1;
+        else
+            parcheggioValutato = new Parcheggio();
 
         updateTextViews();
 
@@ -91,7 +121,50 @@ public class RecapActivity extends AppCompatActivity {
         bottoneConfermaRecap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Metodo per caricare la valutazione nel database/o dove ci sono le altre valutazioni
+
+                //Aggiunge un documento delle valutazioni
+                db.collection("valutazione")
+                        .add(valutazioneUtente)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+                //Ricalcola i dati del parcheggio
+                Float palle = parcheggioValutato.getRatingSicurezza() + valutazioneUtente.getRatingSicurezza();
+                int palle33 = parcheggioValutato.getNumValutazioni() + 1;
+                parcheggioValutato.setRatingSicurezza(palle / palle33);
+
+                //Aggiorna i dati relativi al parcheggio
+                DocumentReference nuovo = db.collection("parcheggio").document(String.valueOf(valutazioneUtente.getIdParcheggio()));
+                nuovo.update("ratingSicurezza", parcheggioValutato.getRatingSicurezza(),
+                                "commenti", parcheggioValutato.getCommenti(),
+                                "sMattina", parcheggioValutato.getsMattina(),
+                                "sSera", parcheggioValutato.getsSera(),
+                                "sNotte", parcheggioValutato.getsNotte(),
+                                "fsMattina", parcheggioValutato.getFsMattina(),
+                                "fsSera", parcheggioValutato.getFsSera(),
+                                "fsNotte", parcheggioValutato.getFsNotte())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully updated!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error updating document", e);
+                            }
+                        });
 
                 //Reindirizza a quale activity ????
             }
@@ -109,6 +182,7 @@ public class RecapActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Aggiorna i dati delle textview di recap
     void updateTextViews(){
         spinner_sMattina.setText(valutazioneUtente.getsMattina());
         spinner_fsMattina.setText(valutazioneUtente.getFsMattina());

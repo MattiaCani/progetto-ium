@@ -5,14 +5,21 @@ import java.io.Serializable;
 public class Valutazione implements Serializable {
     private Person utente;
 
+    private String nomeParcheggio;
+    private int idParcheggio;
+
     private String sMattina, sSera, sNotte;
     private String fsMattina, fsSera, fsNotte;
+
     private Float ratingSicurezza;
     private String commento;
 
     public Valutazione() {}
 
-    public Valutazione(String sMattina, String sSera, String sNotte, String fsMattina, String fsSera, String fsNotte, Float ratingSicurezza, String commento) {
+    public Valutazione(Person utente, String nomeParcheggio, int idParcheggio, String sMattina, String sSera, String sNotte, String fsMattina, String fsSera, String fsNotte, Float ratingSicurezza, String commento) {
+        this.utente = utente;
+        this.nomeParcheggio = nomeParcheggio;
+        this.idParcheggio = idParcheggio;
         this.sMattina = sMattina;
         this.sSera = sSera;
         this.sNotte = sNotte;
@@ -21,6 +28,22 @@ public class Valutazione implements Serializable {
         this.fsNotte = fsNotte;
         this.ratingSicurezza = ratingSicurezza;
         this.commento = commento;
+    }
+
+    public String getNomeParcheggio() {
+        return nomeParcheggio;
+    }
+
+    public void setNomeParcheggio(String nomeParcheggio) {
+        this.nomeParcheggio = nomeParcheggio;
+    }
+
+    public int getIdParcheggio() {
+        return idParcheggio;
+    }
+
+    public void setIdParcheggio(int idParcheggio) {
+        this.idParcheggio = idParcheggio;
     }
 
     public Person getUtente() {
