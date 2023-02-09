@@ -8,15 +8,15 @@ public class Valutazione implements Serializable {
     private String nomeParcheggio;
     private int idParcheggio;
 
-    private String sMattina, sSera, sNotte;
-    private String fsMattina, fsSera, fsNotte;
+    private int sMattina, sSera, sNotte;
+    private int fsMattina, fsSera, fsNotte;
 
     private Float ratingSicurezza;
     private String commento;
 
     public Valutazione() {}
 
-    public Valutazione(Person utente, String nomeParcheggio, int idParcheggio, String sMattina, String sSera, String sNotte, String fsMattina, String fsSera, String fsNotte, Float ratingSicurezza, String commento) {
+    public Valutazione(Person utente, String nomeParcheggio, int idParcheggio, int sMattina, int sSera, int sNotte, int fsMattina, int fsSera, int fsNotte, Float ratingSicurezza, String commento) {
         this.utente = utente;
         this.nomeParcheggio = nomeParcheggio;
         this.idParcheggio = idParcheggio;
@@ -54,30 +54,6 @@ public class Valutazione implements Serializable {
         this.utente = utente;
     }
 
-    public String getsMattina() {
-        return sMattina;
-    }
-
-    public String getsSera() {
-        return sSera;
-    }
-
-    public String getsNotte() {
-        return sNotte;
-    }
-
-    public String getFsMattina() {
-        return fsMattina;
-    }
-
-    public String getFsSera() {
-        return fsSera;
-    }
-
-    public String getFsNotte() {
-        return fsNotte;
-    }
-
     public Float getRatingSicurezza() {
         return ratingSicurezza;
     }
@@ -86,27 +62,51 @@ public class Valutazione implements Serializable {
         return commento;
     }
 
-    public void setsMattina(String sMattina) {
+    public int getsMattina() {
+        return sMattina;
+    }
+
+    public void setsMattina(int sMattina) {
         this.sMattina = sMattina;
     }
 
-    public void setsSera(String sSera) {
+    public int getsSera() {
+        return sSera;
+    }
+
+    public void setsSera(int sSera) {
         this.sSera = sSera;
     }
 
-    public void setsNotte(String sNotte) {
+    public int getsNotte() {
+        return sNotte;
+    }
+
+    public void setsNotte(int sNotte) {
         this.sNotte = sNotte;
     }
 
-    public void setFsMattina(String fsMattina) {
+    public int getFsMattina() {
+        return fsMattina;
+    }
+
+    public void setFsMattina(int fsMattina) {
         this.fsMattina = fsMattina;
     }
 
-    public void setFsSera(String fsSera) {
+    public int getFsSera() {
+        return fsSera;
+    }
+
+    public void setFsSera(int fsSera) {
         this.fsSera = fsSera;
     }
 
-    public void setFsNotte(String fsNotte) {
+    public int getFsNotte() {
+        return fsNotte;
+    }
+
+    public void setFsNotte(int fsNotte) {
         this.fsNotte = fsNotte;
     }
 

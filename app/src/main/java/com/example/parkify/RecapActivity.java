@@ -37,7 +37,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RecapActivity extends AppCompatActivity {
@@ -51,7 +53,6 @@ public class RecapActivity extends AppCompatActivity {
     Button bottoneConfermaRecap;
 
     Valutazione valutazioneUtente;
-    Parcheggio parcheggioValutato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +107,6 @@ public class RecapActivity extends AppCompatActivity {
         else
             valutazioneUtente = new Valutazione();
 
-        //Recupero delle info sul parcheggio
-        Intent intent1 = getIntent();
-        Serializable obj1 = intent1.getSerializableExtra(ValutazioneActivity.VALUTAZIONE_EXTRA1);
-
-        if(obj1 instanceof Parcheggio)
-            parcheggioValutato = (Parcheggio) obj1;
-        else
-            parcheggioValutato = new Parcheggio();
-
         updateTextViews();
 
         //Conferma i dati inseriti e passa alla activity di recap
@@ -138,35 +130,53 @@ public class RecapActivity extends AppCompatActivity {
                             }
                         });
 
-                //Ricalcola i dati del parcheggio
-                Float palle = parcheggioValutato.getRatingSicurezza() + valutazioneUtente.getRatingSicurezza();
-                int palle33 = parcheggioValutato.getNumValutazioni() + 1;
-                parcheggioValutato.setRatingSicurezza(palle / palle33);
+                DocumentReference docRef = db.collection("parcheggio").document(String.valueOf(valutazioneUtente.getIdParcheggio()));
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Parcheggio pV = documentSnapshot.toObject(Parcheggio.class);
 
-                //Aggiorna i dati relativi al parcheggio
-                DocumentReference nuovo = db.collection("parcheggio").document(String.valueOf(valutazioneUtente.getIdParcheggio()));
-                nuovo.update("ratingSicurezza", parcheggioValutato.getRatingSicurezza(),
-                                "commenti", parcheggioValutato.getCommenti(),
-                                "sMattina", parcheggioValutato.getsMattina(),
-                                "sSera", parcheggioValutato.getsSera(),
-                                "sNotte", parcheggioValutato.getsNotte(),
-                                "fsMattina", parcheggioValutato.getFsMattina(),
-                                "fsSera", parcheggioValutato.getFsSera(),
-                                "fsNotte", parcheggioValutato.getFsNotte())
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully updated!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error updating document", e);
-                            }
-                        });
+                        //Ricalcola i dati del parcheggio
+                        Float sum = pV.getRatingSicurezza() * pV.getNumValutazioni() + valutazioneUtente.getRatingSicurezza();
+                        int num = pV.getNumValutazioni() + 1;
+
+                        List<String> commenti = new ArrayList<>(pV.getCommenti());
+                        commenti.add(valutazioneUtente.getCommento());
+
+                        //Aggiorna i dati relativi al parcheggio
+                        DocumentReference nuovo = db.collection("parcheggio").document(String.valueOf(valutazioneUtente.getIdParcheggio()));
+                        nuovo.update("ratingSicurezza", sum/num,
+                                        "commenti", commenti,
+                                        "sMattina", updateDisp(pV.getsMattina(), pV.getNumValutazioni(), valutazioneUtente.getsMattina()),
+                                        "sSera", updateDisp(pV.getsSera(), pV.getNumValutazioni(), valutazioneUtente.getsSera()),
+                                        "sNotte", updateDisp(pV.getsNotte(), pV.getNumValutazioni(), valutazioneUtente.getsNotte()),
+                                        "fsMattina", updateDisp(pV.getFsMattina(), pV.getNumValutazioni(), valutazioneUtente.getFsMattina()),
+                                        "fsSera", updateDisp(pV.getFsSera(), pV.getNumValutazioni(), valutazioneUtente.getFsSera()),
+                                        "fsNotte", updateDisp(pV.getFsNotte(), pV.getNumValutazioni(), valutazioneUtente.getFsNotte()),
+                                        "numValutazioni", num)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error updating document", e);
+                                    }
+                                });
+                    }
+                });
 
                 //Reindirizza a quale activity ????
+                Intent paginaHome = new Intent(RecapActivity.this, HomepageActivity.class);
+                paginaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                paginaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                paginaHome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                paginaHome.putExtra("EXIT", true);
+                startActivity(paginaHome);
+                finish();
             }
         });
     }
@@ -184,16 +194,22 @@ public class RecapActivity extends AppCompatActivity {
 
     //Aggiorna i dati delle textview di recap
     void updateTextViews(){
-        spinner_sMattina.setText(valutazioneUtente.getsMattina());
-        spinner_fsMattina.setText(valutazioneUtente.getFsMattina());
+        spinner_sMattina.setText(String.valueOf(valutazioneUtente.getsMattina()));
+        spinner_fsMattina.setText(String.valueOf(valutazioneUtente.getFsMattina()));
 
-        spinner_sSera.setText(valutazioneUtente.getsSera());
-        spinner_fsSera.setText(valutazioneUtente.getFsSera());
+        spinner_sSera.setText(String.valueOf(valutazioneUtente.getsSera()));
+        spinner_fsSera.setText(String.valueOf(valutazioneUtente.getFsSera()));
 
-        spinner_sNotte.setText(valutazioneUtente.getsNotte());
-        spinner_fsNotte.setText(valutazioneUtente.getFsNotte());
+        spinner_sNotte.setText(String.valueOf(valutazioneUtente.getsNotte()));
+        spinner_fsNotte.setText(String.valueOf(valutazioneUtente.getFsNotte()));
 
+        ratingSicurezzaResult.setStepSize((float) 0.5);
         ratingSicurezzaResult.setRating(valutazioneUtente.getRatingSicurezza());
         commentoResult.setText(valutazioneUtente.getCommento());
+    }
+
+    //Aggiorna i dati della disponibilità
+    Float updateDisp(Float value1, int num, int value2){
+        return (value1 * num + value2) / (num + 1);
     }
 }

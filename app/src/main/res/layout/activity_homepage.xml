@@ -24,7 +24,7 @@
                 <com.example.parkify.CustomMapView
                     android:id="@+id/map"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="400dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp" />
 
@@ -37,7 +37,8 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/infobox">
+                android:id="@+id/infoBox"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/nomeParcheggio"
@@ -56,12 +57,12 @@
                     android:layout_height="5dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_gravity="center"
 
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    android:orientation="vertical">
 
                     <TableLayout
                         android:layout_width="wrap_content"
@@ -96,7 +97,7 @@
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Settimana"
-                                android:textSize="23.5sp"
+                                android:textSize="20sp"
                                 android:background="@drawable/bordo_bianco">
 
                             </TextView>
@@ -108,7 +109,7 @@
                                 android:paddingVertical="5dp"
                                 android:paddingHorizontal="10dp"
                                 android:textColor="@color/white"
-                                android:textSize="23.5sp"
+                                android:textSize="20sp"
                                 android:gravity="center"
                                 android:background="@drawable/bordo_bianco">
 
@@ -130,7 +131,7 @@
                                 android:text="Mattina"
                                 android:padding="5dp"
                                 android:textColor="@color/white"
-                                android:textSize="25sp"
+                                android:textSize="20sp"
                                 android:background="@drawable/bordo_bianco" />
 
                             <TextView
@@ -172,7 +173,7 @@
 
                                 android:text="Sera"
                                 android:textColor="@color/white"
-                                android:textSize="25sp"
+                                android:textSize="20sp"
                                 android:background="@drawable/bordo_bianco" />
 
                             <TextView
@@ -214,7 +215,7 @@
 
                                 android:text="Notte"
                                 android:textColor="@color/white"
-                                android:textSize="25sp"
+                                android:textSize="20sp"
                                 android:background="@drawable/bordo_bianco" />
 
                             <TextView

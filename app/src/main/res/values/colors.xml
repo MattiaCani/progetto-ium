@@ -22,4 +22,6 @@
     <color name="grey">#BABDBD</color>
     <color name="green">#669900</color>
     <color name="red">#FF0000</color>
+    <color name="free_green">#45C92E</color>
+    <color name="pay_red">#AD1212</color>
 </resources>

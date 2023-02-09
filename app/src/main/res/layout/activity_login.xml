@@ -26,10 +26,10 @@
                 android:gravity="left"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"/>
+
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="40dp" />
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -43,15 +43,14 @@
                 android:gravity="center"
                 android:visibility="gone"/>
 
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username:"
                 android:textSize="25dp"
                 android:layout_gravity="center"
-                android:fontFamily="sans-serif-condensed" />
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -69,8 +68,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/editUsername"
                     android:textSize="20dp"
+                    android:textColor="@color/black"
                     />
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="wrap_content"

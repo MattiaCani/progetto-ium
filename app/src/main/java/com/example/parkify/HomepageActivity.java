@@ -8,19 +8,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +43,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
+import androidx.transition.Scene;
+import androidx.transition.Slide;
+import androidx.transition.Transition;
+import androidx.transition.TransitionInflater;
+import androidx.transition.TransitionManager;
 
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -43,16 +60,27 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import org.mapsforge.map.android.layers.MyLocationOverlay;
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.Polygon;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.Projection;
+import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +98,8 @@ public class HomepageActivity extends AppCompatActivity {
     private static CustomMapView map = null;
 
     //Widget
+    LinearLayout infobox;
+
     TextView nomeParcheggio;
 
     TextView spinner_sMattina, spinner_sSera, spinner_sNotte;
@@ -77,6 +107,8 @@ public class HomepageActivity extends AppCompatActivity {
 
     RatingBar ratingSicurezzaResult;
     Button buttonAggiungiValutazione;
+
+    private static Marker markerSelezionato;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,9 +161,12 @@ public class HomepageActivity extends AppCompatActivity {
         else
             map.getController().animateTo(new GeoPoint(39.23054d, 9.11917d));
 
-        map.getController().setZoom(10.0);
+        map.getController().setZoom(13.0);
+        markerSelezionato = new Marker(map);
 
         //Recupero dei dati
+        infobox = findViewById(R.id.infoBox);
+
         nomeParcheggio = findViewById(R.id.nomeParcheggio);
 
         spinner_sMattina = findViewById(R.id.s_dispMattinaResult);
@@ -174,32 +209,62 @@ public class HomepageActivity extends AppCompatActivity {
     public void addMarker(Parcheggio parcheggio, GeoPoint luogo){
         Marker newMarker = new Marker(map);
         newMarker.setPosition(luogo);
-        newMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        newMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         map.getOverlays().add(newMarker);
 
         if(parcheggio.isFree())
-            newMarker.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.map_marker_free));
+            newMarker.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.location_free));
         else
-            newMarker.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.map_marker_pay));
-
-        newMarker.setTitle(parcheggio.getNomeParcheggio());
+            newMarker.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.location_pay));
 
         //Al click su un Marker mostra le informazioni del parcheggio relativo a quel marker
         newMarker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker, MapView mapView) {
-                nomeParcheggio.setText(parcheggio.getNomeParcheggio());
+                map.getController().animateTo(luogo, 15.50, 500L);
 
-                spinner_sMattina.setText(parcheggio.getsMattina());
-                spinner_fsMattina.setText(parcheggio.getFsMattina());
+                Animation slideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+                infobox.startAnimation(slideDown);
 
-                spinner_sSera.setText(parcheggio.getsSera());
-                spinner_fsSera.setText(parcheggio.getFsSera());
+                slideDown.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
-                spinner_sNotte.setText(parcheggio.getsNotte());
-                spinner_fsNotte.setText(parcheggio.getFsNotte());
+                    }
 
-                ratingSicurezzaResult.setRating(parcheggio.getRatingSicurezza());
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                        //TransitionManager.beginDelayedTransition(infobox);
+                        Animation slideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                        infobox.setVisibility(View.VISIBLE);
+                        infobox.startAnimation(slideUp);
+
+                        if(parcheggio.isFree())
+                            infobox.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.infobox_free));
+                        else
+                            infobox.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.infobox_pay));
+
+                        nomeParcheggio.setText(parcheggio.getNomeParcheggio());
+
+                        chooseSpinnerText(spinner_sMattina, parcheggio.getsMattina());
+                        chooseSpinnerText(spinner_fsMattina, parcheggio.getFsMattina());
+
+                        chooseSpinnerText(spinner_sSera, parcheggio.getsSera());
+                        chooseSpinnerText(spinner_fsSera, parcheggio.getFsSera());
+
+                        chooseSpinnerText(spinner_sNotte, parcheggio.getsNotte());
+                        chooseSpinnerText(spinner_fsNotte, parcheggio.getFsNotte());
+
+                        ratingSicurezzaResult.setRating(parcheggio.getRatingSicurezza());
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
                 return false;
             }
         });
@@ -248,5 +313,17 @@ public class HomepageActivity extends AppCompatActivity {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
+    }
+
+    //Sceglie il testo dello spinner in base alla media
+    void chooseSpinnerText(TextView spinner, Float media){
+        String text = "Variabile";
+
+        if(media <= 2.5)
+            text = "Molta";
+        else if (media >= 3.5)
+            text = "Poca";
+
+        spinner.setText(text);
     }
 }

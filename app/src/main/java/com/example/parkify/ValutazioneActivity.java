@@ -45,7 +45,6 @@ public class ValutazioneActivity extends AppCompatActivity {
 
     //Per il passaggio a un altra activity
     public static final String VALUTAZIONE_EXTRA0 = "Valutazione";
-    public static final String VALUTAZIONE_EXTRA1 = "Parcheggio";
 
     //Gestione spinners
     LinearLayout settimanaSpinners, fineSettimanaSpinners;
@@ -163,7 +162,6 @@ public class ValutazioneActivity extends AppCompatActivity {
 
                 Intent paginaRecap = new Intent(ValutazioneActivity.this, RecapActivity.class);
                 paginaRecap.putExtra(VALUTAZIONE_EXTRA0, valutazioneUtente);
-                paginaRecap.putExtra(VALUTAZIONE_EXTRA1, infoParcheggio);
                 startActivity(paginaRecap);
             }
         });
@@ -182,22 +180,22 @@ public class ValutazioneActivity extends AppCompatActivity {
 
     //Aggiorna i dati della valutazione
     void updateValutazione (){
-        String spinner_sMattina = this.spinner_sMattina.getSelectedItem().toString();
+        int spinner_sMattina = Integer.parseInt(this.spinner_sMattina.getSelectedItem().toString());
         this.valutazioneUtente.setsMattina(spinner_sMattina);
 
-        String spinner_fsMattina = this.spinner_fsMattina.getSelectedItem().toString();
+        int spinner_fsMattina = Integer.parseInt(this.spinner_fsMattina.getSelectedItem().toString());
         this.valutazioneUtente.setFsMattina(spinner_fsMattina);
 
-        String spinner_sSera = this.spinner_sSera.getSelectedItem().toString();
+        int spinner_sSera = Integer.parseInt(this.spinner_sSera.getSelectedItem().toString());
         this.valutazioneUtente.setsSera(spinner_sSera);
 
-        String spinner_fsSera = this.spinner_fsSera.getSelectedItem().toString();
+        int spinner_fsSera = Integer.parseInt(this.spinner_fsSera.getSelectedItem().toString());
         this.valutazioneUtente.setFsSera(spinner_fsSera);
 
-        String spinner_sNotte = this.spinner_sNotte.getSelectedItem().toString();
+        int spinner_sNotte = Integer.parseInt(this.spinner_sNotte.getSelectedItem().toString());
         this.valutazioneUtente.setsNotte(spinner_sNotte);
 
-        String spinner_fsNotte = this.spinner_fsNotte.getSelectedItem().toString();
+        int spinner_fsNotte = Integer.parseInt(this.spinner_fsNotte.getSelectedItem().toString());
         this.valutazioneUtente.setFsNotte(spinner_fsNotte);
 
         String commento = this.commento.getText().toString();
