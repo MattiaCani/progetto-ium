@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "916584855178",
+    "project_id": "parkify-b48ca",
+    "storage_bucket": "parkify-b48ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916584855178:android:dfbf5fea79e3aac5db5f73",
+        "android_client_info": {
+          "package_name": "com.example.parkify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916584855178-2f9p32o37oeid2o6mksplnfcuigrpi2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8GItWqtPSpuOGp_VETaDFk6UD4ND9RLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916584855178-2f9p32o37oeid2o6mksplnfcuigrpi2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

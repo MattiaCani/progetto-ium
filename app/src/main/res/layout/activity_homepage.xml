@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/blue_900"
+                android:layout_margin="10dp">
+
+                <com.example.parkify.CustomMapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/infoBox"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/nomeParcheggio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:text="Nome parcheggio"
+                    android:layout_marginHorizontal="5dp"
+                    android:textSize="35dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="5dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_gravity="center"
+
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:paddingTop="10dp">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:paddingVertical="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:gravity="center"
+
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="25sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Settimana"
+                                android:textSize="20sp"
+                                android:background="@drawable/bordo_bianco">
+
+                            </TextView>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Fine\nSettimana"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="10dp"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_bianco">
+
+                            </TextView>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+
+                                android:gravity="center"
+
+                                android:text="Mattina"
+                                android:padding="5dp"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:background="@drawable/bordo_bianco" />
+
+                            <TextView
+                                android:id="@+id/s_dispMattinaResult"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="25sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_nero_sx">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/fs_dispMattinaResult"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="25sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_nero">
+
+                            </TextView>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+
+                                android:gravity="center"
+
+                                android:text="Sera"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:background="@drawable/bordo_bianco" />
+
+                            <TextView
+                                android:id="@+id/s_dispSeraResult"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="25sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_nero_sx">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/fs_dispSeraResult"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="25sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_nero">
+
+                            </TextView>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+
+                                android:gravity="center"
+
+                                android:text="Notte"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:background="@drawable/bordo_bianco" />
+
+                            <TextView
+                                android:id="@+id/s_dispNotteResult"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="25sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_nero_sx">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/fs_dispNotteResult"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="25sp"
+                                android:gravity="center"
+                                android:background="@drawable/bordo_nero">
+
+                            </TextView>
+                        </TableRow>
+
+                    </TableLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="40dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="5dp"
+
+                        android:gravity="center"
+                        android:text="Sicurezza"
+                        android:textColor="@color/black"
+
+                        android:textSize="30sp" />
+
+                    <RatingBar
+                        android:id="@+id/ratingSicurezzaResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:progressTint="@color/rating_star_yellow"
+                        android:isIndicator="true"
+
+                        android:secondaryProgressTint="@color/rating_star_yellow" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/buttonAggiungiValutazione"
+                    android:text="Aggiungi una valutazione"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:backgroundTint="@color/blue_900"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

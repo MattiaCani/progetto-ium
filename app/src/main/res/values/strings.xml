@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Parkify</string>
+    <string-array name="array_disponibilita">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="registration_link"><u>Nuovo utente? Registrati</u></string>
+    <string name="login_link"><u>Già iscritto? Accedi</u></string>
+    <string name="title_activity_homepage">Homepage</string>
 </resources>

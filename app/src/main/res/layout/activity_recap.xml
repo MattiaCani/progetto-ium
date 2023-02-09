@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ValutazioneActivity"
+    android:theme="@style/AppTheme">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Riassunto valutazione"
+                android:textColor="@color/black"
+                android:textSize="45sp"
+                android:padding="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Settimana"
+                            android:textSize="23.5sp"
+                            android:background="@drawable/bordo_bianco">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fine\nSettimana"
+                            android:paddingVertical="5dp"
+                            android:paddingHorizontal="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="23.5sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_bianco">
+
+                        </TextView>
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:gravity="center"
+
+                            android:text="Mattina"
+                            android:padding="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="25sp"
+                            android:background="@drawable/bordo_bianco" />
+
+                        <TextView
+                            android:id="@+id/s_dispMattinaResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_nero_sx">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/fs_dispMattinaResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_nero">
+
+                        </TextView>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            android:gravity="center"
+
+                            android:text="Sera"
+                            android:textColor="@color/white"
+                            android:textSize="25sp"
+                            android:background="@drawable/bordo_bianco" />
+
+                        <TextView
+                            android:id="@+id/s_dispSeraResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_nero_sx">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/fs_dispSeraResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_nero">
+
+                        </TextView>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:gravity="center"
+
+                            android:text="Notte"
+                            android:textColor="@color/white"
+                            android:textSize="25sp"
+                            android:background="@drawable/bordo_bianco" />
+
+                        <TextView
+                            android:id="@+id/s_dispNotteResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_nero_sx">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/fs_dispNotteResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_nero">
+
+                        </TextView>
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="40dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="5dp"
+
+                    android:gravity="center"
+                    android:text="Sicurezza"
+                    android:textColor="@color/black"
+
+                    android:textSize="30sp" />
+
+                <RatingBar
+                    android:id="@+id/ratingSicurezzaResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/rating_star_yellow"
+                    android:isIndicator="true"
+
+                    android:secondaryProgressTint="@color/rating_star_yellow" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="15dp"
+
+                android:gravity="center"
+                android:text="Commento"
+                android:textColor="@color/black"
+
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/commentoResult"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_marginHorizontal="50dp"
+                android:scrollbars = "vertical"
+
+                android:background="@drawable/bordo_nero"
+
+                android:gravity="top"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/bottoneConfermaRecap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_marginVertical="25dp"
+                android:padding="15dp"
+
+                android:backgroundTint="@color/green"
+                android:text="Conferma"
+
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
