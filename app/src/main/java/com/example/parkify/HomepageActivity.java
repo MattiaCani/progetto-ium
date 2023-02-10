@@ -40,6 +40,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
@@ -108,8 +109,6 @@ public class HomepageActivity extends AppCompatActivity {
     RatingBar ratingSicurezzaResult;
     Button buttonAggiungiValutazione;
 
-    private static Marker markerSelezionato;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +161,6 @@ public class HomepageActivity extends AppCompatActivity {
             map.getController().animateTo(new GeoPoint(39.23054d, 9.11917d));
 
         map.getController().setZoom(13.0);
-        markerSelezionato = new Marker(map);
 
         //Recupero dei dati
         infobox = findViewById(R.id.infoBox);

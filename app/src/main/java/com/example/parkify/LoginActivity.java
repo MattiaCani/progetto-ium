@@ -1,14 +1,19 @@
 package com.example.parkify;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,9 +37,33 @@ public class LoginActivity extends AppCompatActivity {
     Person person = new Person();
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        regLink.setClickable(true);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Imposta di default la modalità giorno
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        //Chiamata della actionbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        //Cambia il colore della statusbar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        }
+
+        //Cambia il colore del testo della statusbar
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         //Richiede le autorizzazioni per usare la mappa
         String[] autorizzazioniMappa = new String[3];
@@ -58,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (checkInput()) {
+                    loginButton.setClickable(false);
                     updatePerson();
 
                     if (UserList.dbUser.contains(person)) {
@@ -94,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
         regLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                regLink.setClickable(false);
+
                 Intent registrationPage = new Intent(LoginActivity.this,
                         SignInActivity.class);
                 startActivity(registrationPage);

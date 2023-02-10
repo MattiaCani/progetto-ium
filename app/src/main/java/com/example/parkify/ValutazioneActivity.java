@@ -61,6 +61,13 @@ public class ValutazioneActivity extends AppCompatActivity {
     Parcheggio infoParcheggio;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        bottoneConferma.setClickable(true);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valutazione);
@@ -159,6 +166,7 @@ public class ValutazioneActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateValutazione();
+                bottoneConferma.setClickable(false);
 
                 Intent paginaRecap = new Intent(ValutazioneActivity.this, RecapActivity.class);
                 paginaRecap.putExtra(VALUTAZIONE_EXTRA0, valutazioneUtente);
@@ -175,6 +183,7 @@ public class ValutazioneActivity extends AppCompatActivity {
                 this.finish();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

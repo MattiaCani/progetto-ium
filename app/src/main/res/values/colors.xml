@@ -24,4 +24,5 @@
     <color name="red">#FF0000</color>
     <color name="free_green">#45C92E</color>
     <color name="pay_red">#AD1212</color>
+    <color name="transparent_grey">#ABC0BDBD</color>
 </resources>
