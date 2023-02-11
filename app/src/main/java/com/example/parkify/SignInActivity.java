@@ -1,13 +1,20 @@
 package com.example.parkify;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,20 +22,36 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity {
 
     EditText username, password, email;
     String vehicle;
-    TextView loglink, errorText;
     ImageView pickavatar1, pickavatar2;
-    Button regbutton;
+
+    TextView loglink, errorText;
     Spinner dropdown;
+    Button regbutton;
+
+    ProgressBar progressBar;
+
     Person person;
-    private boolean existingUser = false;
+
     public static final String USER_EXTRA = "com.example.progetto.Person";
 
     @Override
@@ -39,6 +62,9 @@ public class SignInActivity extends AppCompatActivity {
 
         //Imposta di default la modalità giorno
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        //Inizializza la connessione al database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -54,29 +80,41 @@ public class SignInActivity extends AppCompatActivity {
         //Cambia il colore del testo della statusbar
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
+        //Gestione dello spinner
         dropdown = findViewById(R.id.spinnerVehicle);
+
         //lista di elementi per lo spinner
         String[] items = new String[]{"SUV", "Utilitaria", "Furgone",
                 "Berlina", "Station Wagon", "A due ruote"};
         //Adapter per decidere come sono mostrati i dati dello spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //settare lo spinner
+
+        //Settare lo spinner
         dropdown.setAdapter(adapter);
 
-
+        //Recupero widget
         username = findViewById(R.id.inputUsername);
         password = findViewById(R.id.inputPassword);
         email = findViewById(R.id.inputEmail);
-        //prendo lo spinner e porto a string il selected item per avere il veicolo
-        vehicle = dropdown.getSelectedItem().toString();
-        loglink = findViewById(R.id.log_link);
-        regbutton = findViewById(R.id.regButton);
+
         pickavatar1 = findViewById(R.id.avatar1);
         pickavatar2 = findViewById(R.id.avatar2);
-        errorText = findViewById(R.id.error);
 
         pickavatar1.setClickable(true);
         pickavatar2.setClickable(true);
+
+        //Prendo lo spinner e porto a string il selected item per avere il veicolo
+        vehicle = dropdown.getSelectedItem().toString();
+
+        loglink = findViewById(R.id.log_link);
+        errorText = findViewById(R.id.error);
+        regbutton = findViewById(R.id.regButton);
+
+        progressBar = findViewById(R.id.progressBar);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        person = new Person();
 
         //link per tornare al login
         loglink.setOnClickListener(new View.OnClickListener() {
@@ -87,30 +125,55 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        person = new Person();
-
+        //Conferma registrazione
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(checkInput()){
+                    //Finta barra di caricamento
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    //Rende il bottone non cliccabile e aggiorna i dati dell'utente
                     regbutton.setClickable(false);
                     updatePerson();
 
-                    Intent showResult = new Intent(SignInActivity.this, LoginActivity.class);
+                    //Controlla se l'utente è nel database
+                    DocumentReference docRef = db.collection("utente").document(person.getUsername());
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(!documentSnapshot.exists()) {
+                                db.collection("utente").document(person.getUsername())
+                                        .set(person)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                finish();
+                                            }
+                                        });
+                            } else {
+                                builder.setMessage("Perfavore inserire un username diverso")
+                                        .setTitle("L'username \"" + person.getUsername() + "\" è già stato preso");
 
-                    person.setUserId(UserList.dbUser.size()+1);
-                    UserList.dbUser.add(person);
+                                builder.setPositiveButton("Ho capito", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                    }
+                                });
 
-                    Toast.makeText(SignInActivity.this, "Registrazione effettuata", Toast.LENGTH_SHORT).show();
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
 
-                    //showResult.putExtra(USER_EXTRA, person);
-                    startActivity(showResult);
-                    finish();
+                                regbutton.setClickable(true);
+                            }
+                        }
+                    });
                 }
             }
         });
 
-
+        //L'utente ha scelto l'avatar 1
         pickavatar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +183,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        //L'utente ha scelto l'avatar 2
         pickavatar2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +195,7 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-
+    //Controlli dell'input
     private boolean checkInput(){
         int errors = 0;
         //editName ecc contengono i riferimenti all'edit text
@@ -151,19 +215,6 @@ public class SignInActivity extends AppCompatActivity {
             email.setError("Inserire un indirizzo email");
         }
 
-        //controllo se l'username esiste già nel DB
-        for(Person u : UserList.dbUser){
-            if(u.getUsername().equals(username.getText().toString())){
-                existingUser = true;
-            }
-        }
-
-        if(existingUser){
-            errors++;
-            username.setError("L'username scelto è già stato preso");
-            existingUser = false;
-        }
-
         switch(errors){
             case 0:
                 errorText.setVisibility(View.GONE);
@@ -181,17 +232,18 @@ public class SignInActivity extends AppCompatActivity {
         return errors == 0;
     }
 
-
-
+    //Setta i dati relativi alla registrazione
     private void updatePerson(){
         String username = this.username.getText().toString();
         this.person.setUsername(username);
+
         String password = this.password.getText().toString();
         this.person.setPassword(password);
+
         String email = this.email.getText().toString();
         this.person.setEmail(email);
+
         String vehicle = this.vehicle;
         this.person.setVehicle(vehicle);
-        this.person.setUserId(UserList.dbUser.size());
     }
 }

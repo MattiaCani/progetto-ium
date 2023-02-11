@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"  />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -17,10 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parkify"
-        tools:targetApi="33"
-        tools:replace="android:allowBackup">
-
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        tools:replace="android:allowBackup"
+        tools:targetApi="33">
 
         <activity
             android:name=".LoginActivity"
@@ -29,7 +27,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -37,30 +35,40 @@
             android:name=".SignInActivity"
             android:exported="false"
             android:label="Sign In">
+
         </activity>
 
         <activity
             android:name=".HomepageActivity"
             android:exported="false"
             android:label="Homepage">
+
         </activity>
 
         <activity
             android:name=".PaginaPersonaleActivity"
             android:exported="false"
             android:label="Pagina Personale">
+
         </activity>
 
         <activity
             android:name=".ValutazioneActivity"
             android:exported="false"
             android:label="Valutazione">
+
         </activity>
 
         <activity
             android:name=".RecapActivity"
             android:exported="false"
             android:label="Recap">
+
+        </activity>
+
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false">
         </activity>
 
     </application>

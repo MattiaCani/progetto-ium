@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -53,6 +54,9 @@ import androidx.transition.TransitionManager;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -65,6 +69,7 @@ import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -109,6 +114,8 @@ public class HomepageActivity extends AppCompatActivity {
     RatingBar ratingSicurezzaResult;
     Button buttonAggiungiValutazione;
 
+    BottomNavigationView navigationView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +139,7 @@ public class HomepageActivity extends AppCompatActivity {
 
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.hide();
+        actionBar.hide();
 
         //Cambia il colore della actionbar
         if (actionBar != null) {
@@ -147,6 +154,8 @@ public class HomepageActivity extends AppCompatActivity {
         //Crea la mappa
         map = (CustomMapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
+        map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
+        map.setMultiTouchControls(true);
 
         //Calcolo posizione tramite GPS, altrimenti zomma direttamente su Cagliari
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
@@ -274,6 +283,39 @@ public class HomepageActivity extends AppCompatActivity {
                 Intent paginaValutazione = new Intent(HomepageActivity.this, ValutazioneActivity.class);
                 paginaValutazione.putExtra(HOMEPAGE_EXTRA, parcheggio);
                 startActivity(paginaValutazione);
+            }
+        });
+
+        // Find the BottomNavigationView and set up the listener
+        navigationView = findViewById(R.id.navBar);
+        navigationView.setSelectedItemId(R.id.nav_map);
+
+        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.nav_map:
+                        break;
+                    case R.id.nav_search:
+                        intent = new Intent(HomepageActivity.this, SearchActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                        finish();
+                        break;
+                    case R.id.nav_home:
+                        intent = new Intent(HomepageActivity.this, PaginaPersonaleActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                        finish();
+                        break;
+                    default:
+                        return false;
+                }
+                return true; //true to display the item as the selected item
             }
         });
     }

@@ -15,26 +15,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bentornato su\nParkify"
-                android:textSize="36dp"
-                android:layout_marginLeft="15dp"
-                android:layout_gravity="left"
-                android:gravity="left"
-                android:textColor="@color/black"
-                android:fontFamily="sans-serif"/>
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/logo"
+                android:layout_gravity="center"/>
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="10dp" />
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/placeholder_logo"
-                android:layout_gravity="center"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -52,7 +41,7 @@
                 android:textColor="@color/red"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="invisible"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,6 +53,7 @@
                 android:textColor="@color/black"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usernameError"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +62,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:fontFamily="sans-serif-condensed">
+                app:errorTextAppearance="@style/errorStyle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -101,15 +91,16 @@
                 android:textColor="@color/black"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordError"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Password:"
                 android:textSize="25dp"
+                app:errorTextAppearance="@style/errorStyle"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:fontFamily="sans-serif-condensed">
+                android:layout_marginEnd="32dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -123,32 +114,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp" />
 
-            <Button
+            <com.skydoves.elasticviews.ElasticButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/loginButton"
                 android:text="Accedi"
-                android:textSize="40dp"
+                android:textColor="@color/white"
+                android:textSize="50sp"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                />
+                android:background="@drawable/gradient_buttons"
+                app:button_cornerRadius="4dp"
+                app:button_duration="250"
+                app:button_scale="0.87"/>
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="30dp" />
+                android:layout_height="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="@string/registration_link"
                 android:textSize="20dp"
                 android:id="@+id/reg_link"
                 android:fontFamily="sans-serif"
-                android:textColor="@color/blue_900"
+                android:textColor="@color/blue_primary"
                 android:layout_gravity="center"
-                android:gravity="center"
                 />
 
             <Space
@@ -158,5 +153,24 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="130dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/blue_primary"
+            android:background="@color/grey_transparent"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

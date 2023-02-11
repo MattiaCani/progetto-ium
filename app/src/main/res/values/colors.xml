@@ -25,4 +25,11 @@
     <color name="free_green">#45C92E</color>
     <color name="pay_red">#AD1212</color>
     <color name="transparent_grey">#ABC0BDBD</color>
+
+    <color name="blue_primary">#4d55d2</color>
+    <color name="viola">#832fc3</color>
+    <color name="blue_secondary">#832fc3</color>
+    <color name="grey_transparent">#72CDCDCD</color>
+    <color name="blue_transparent">#995159CF</color>
+
 </resources>

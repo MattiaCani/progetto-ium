@@ -1,12 +1,13 @@
 package com.example.parkify;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Person implements Serializable {
     private String username, password, email, vehicle;
-    private boolean adminFlag = false;
+
     private boolean isRootFlag = false;
-    private Integer userId;
+
     private Integer picId;
 
     public Person(){
@@ -22,7 +23,6 @@ public class Person implements Serializable {
         this.password = password;
         this.email = email;
         this.vehicle = vehicle;
-        this.adminFlag=false;
     }
 
     public String getUsername() {
@@ -57,22 +57,6 @@ public class Person implements Serializable {
         this.vehicle = vehicle;
     }
 
-    public boolean getAdmin() {
-        return adminFlag;
-    }
-
-    public void setAdmin(boolean adminFlag) {
-        this.adminFlag = adminFlag;
-    }
-
-    public void setUserId(Integer userId){
-        this.userId = userId;
-    }
-
-    public Integer getUserId(){
-        return userId;
-    }
-
     public boolean getRootFlag() {
         return isRootFlag;
     }
@@ -90,19 +74,15 @@ public class Person implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj){
-        if(obj instanceof Person){
-            Person p = (Person) obj;
-
-            return p.getUsername().equals(this.getUsername()) && p.getPassword().equals(this.getPassword());
-        }
-
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return username.equals(person.username);
     }
 
     @Override
-    public int hashCode(){
-        return this.username.hashCode() + this.password.hashCode();
+    public int hashCode() {
+        return Objects.hash(username);
     }
-
 }

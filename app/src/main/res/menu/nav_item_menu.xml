@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_map"
+        android:title="Mappa"
+        android:icon="@drawable/ic_placeholder" />
+    <item android:id="@+id/nav_search"
+        android:title="Cerca"
+        android:icon="@drawable/ic_search" />
+    <item android:id="@+id/nav_home"
+        android:title="Profilo"
+        android:icon="@drawable/ic_person" />
+</menu>
