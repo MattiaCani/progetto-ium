@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -75,6 +76,17 @@ public class LoginActivity extends AppCompatActivity {
         //Inizializza la connessione al database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        //Manteniamo la sessione dell'utente loggato
+        SharedPreferences sharedPreferences = getSharedPreferences("Parkify", MODE_PRIVATE);
+
+        boolean isLoggedIn = sharedPreferences.getBoolean("IS_LOGGED_IN", false);
+        if (isLoggedIn) {
+            // The user is logged in.
+            Intent showResult = new Intent(LoginActivity.this, HomepageActivity.class);
+            startActivity(showResult);
+            finish();
+        }
+
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -137,6 +149,12 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent showResult = new Intent(LoginActivity.this, HomepageActivity.class); //da cambiare, deve portare a home
 
                                     showResult.putExtra(USER_EXTRA, person);
+
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("IS_LOGGED_IN", true);
+                                    editor.putString("USER", utente.getUsername());
+                                    editor.apply();
+
                                     startActivity(showResult);
                                     finish();
 
