@@ -115,9 +115,6 @@ public class SignInActivity extends AppCompatActivity {
         pickavatar1.setClickable(true);
         pickavatar2.setClickable(true);
 
-        //Prendo lo spinner e porto a string il selected item per avere il veicolo
-        vehicle = dropdown.getSelectedItem().toString();
-
         loglink = findViewById(R.id.log_link);
         regbutton = findViewById(R.id.regButton);
 
@@ -150,6 +147,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(checkInput()){
+                    vehicle = dropdown.getSelectedItem().toString();
+
                     //Finta barra di caricamento
                     progressBar.setVisibility(View.VISIBLE);
 
