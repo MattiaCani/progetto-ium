@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.skydoves.elasticviews.ElasticAnimation;
+import com.skydoves.elasticviews.ElasticFinishListener;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -69,6 +72,13 @@ public class SignInActivity extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(5000);
         animationDrawable.start();
 
+        //Cambia il colore della statusbar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_grey));
+        }
+
         //Imposta di default la modalità giorno
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
@@ -78,13 +88,6 @@ public class SignInActivity extends AppCompatActivity {
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-        //Cambia il colore della statusbar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        }
 
         //Cambia il colore del testo della statusbar
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -116,7 +119,6 @@ public class SignInActivity extends AppCompatActivity {
         vehicle = dropdown.getSelectedItem().toString();
 
         loglink = findViewById(R.id.log_link);
-        errorText = findViewById(R.id.error);
         regbutton = findViewById(R.id.regButton);
 
         progressBar = findViewById(R.id.progressBar);
@@ -124,13 +126,21 @@ public class SignInActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         person = new Person();
+        person.setPicId(2);
 
         //link per tornare al login
         loglink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loglink.setClickable(false);
-                finish();
+
+                new ElasticAnimation(loglink).setScaleX(0.9f).setScaleY(0.9f).setDuration(150)
+                        .setOnFinishListener(new ElasticFinishListener() {
+                            @Override
+                            public void onFinished() {
+                                finish();
+                            }
+                        }).doAction();
             }
         });
 
@@ -175,6 +185,7 @@ public class SignInActivity extends AppCompatActivity {
                                 dialog.show();
 
                                 regbutton.setClickable(true);
+                                progressBar.setVisibility(View.GONE);
                             }
                         }
                     });
@@ -187,8 +198,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 person.setPicId(1);
-                pickavatar1.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent_grey));
-                pickavatar2.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent));
+                pickavatar1.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.scelta_immagine));
+                pickavatar1.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent));
+                pickavatar2.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent_grey));
+                pickavatar2.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.no_scelta_immagine));
             }
         });
 
@@ -197,8 +210,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 person.setPicId(2);
-                pickavatar2.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent_grey));
-                pickavatar1.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent));
+                pickavatar2.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.scelta_immagine));
+                pickavatar2.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent));
+                pickavatar1.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent_grey));
+                pickavatar1.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.no_scelta_immagine));
             }
         });
 
@@ -207,6 +222,7 @@ public class SignInActivity extends AppCompatActivity {
     //Controlli dell'input
     private boolean checkInput(){
         int errors = 0;
+
         //editName ecc contengono i riferimenti all'edit text
         if(username.getText().toString().length() == 0){
             errors++;
@@ -218,27 +234,15 @@ public class SignInActivity extends AppCompatActivity {
             password.setError("Inserire una password");
         }
 
-
         if(email.getText().toString().length() == 0){
             errors++;
             email.setError("Inserire un indirizzo email");
         }
 
-        switch(errors){
-            case 0:
-                errorText.setVisibility(View.GONE);
-                break;
-            case 1:
-                errorText.setVisibility(View.VISIBLE);
-                errorText.setText("Si è verificato un errore");
-                break;
-            default:
-                errorText.setVisibility(View.VISIBLE);
-                errorText.setText("Si sono verificati " + errors + " errori");
-                break;
-        }
-
-        return errors == 0;
+        if(errors > 0)
+            return false;
+        else
+            return true;
     }
 
     //Setta i dati relativi alla registrazione

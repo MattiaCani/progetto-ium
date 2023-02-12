@@ -40,10 +40,10 @@
                         android:background="@android:color/darker_gray"/>
 
                     <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_marginTop="50dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="40dp"
                         android:id="@+id/userPic"
                         android:src="@drawable/user_icon"/>
 
@@ -54,47 +54,108 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:text="Username"
-                    android:id="@+id/usernameField"
-                    android:textSize="25dp"
-                    android:visibility="visible"/>
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:text="Email"
-                    android:id="@+id/emailField"
-                    android:textSize="25dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Username"
+                        android:textSize="25dp"
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="75dp"
+                        android:text="Username"
+                        android:id="@+id/usernameField"
+                        android:textSize="25dp"
+                        android:visibility="visible"
+                        android:textColor="@color/blue_secondary"/>
+
+                </LinearLayout>
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="10dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:text="Tipo macchina"
-                    android:id="@+id/carField"
-                    android:textSize="25dp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="40dp"
+                        android:text="Email"
+                        android:textSize="25dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="75dp"
+                        android:text="Email"
+                        android:id="@+id/emailField"
+                        android:textSize="25dp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"/>
+                    android:layout_height="10dp" />
 
-                <Button
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Tipo macchina"
+                        android:textSize="25dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="75dp"
+                        android:text="Tipo macchina"
+                        android:id="@+id/carField"
+                        android:textSize="25dp"
+                        android:textColor="@color/black"/>
+
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"/>
+
+                <com.skydoves.elasticviews.ElasticButton
                     android:id="@+id/logoutButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="LOGOUT" />
+                    android:textSize="40sp"
+                    android:padding="15dp"
+                    android:text="LOGOUT"
+                    android:textColor="@color/white"
+                    android:background="@color/pay_red"
+                    app:button_cornerRadius="4dp"
+                    app:button_duration="250"
+                    app:button_scale="0.87"/>
+
             </LinearLayout>
+
         </ScrollView>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -102,12 +163,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="30dp"
             app:menu="@menu/nav_item_menu"
             app:itemIconSize="30dp"
             android:id="@+id/navBar"
-            android:background="@drawable/colori_navbar"/>
+            android:background="@drawable/colori_navbar"
+            app:itemTextColor="@drawable/navigation_view_color"
+            app:itemIconTint="@drawable/navigation_view_color"/>
 
     </RelativeLayout>
 

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@drawable/gradient_list"
     android:id="@+id/loginLayout">
 
     <ScrollView
@@ -40,7 +39,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@color/white"
-                android:textColor="@color/red"
+                android:textColor="@color/dark_red"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:visibility="invisible"/>
@@ -64,17 +63,20 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                app:errorTextAppearance="@style/errorStyle">
+                app:errorTextAppearance="@style/errorStyle"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@null">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editUsername"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"
+                    android:cursorVisible="true"
                     android:inputType="text"
-                    />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@null"
+                    android:textSize="20dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="wrap_content"
@@ -102,14 +104,18 @@
                 app:errorTextAppearance="@style/errorStyle"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp">
+                android:layout_marginEnd="32dp"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@null">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editPassword"
                     android:textSize="20dp"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@null"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -120,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/loginButton"
-                android:text="Accedi"
+                android:text="ACCEDI"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:paddingHorizontal="30dp"

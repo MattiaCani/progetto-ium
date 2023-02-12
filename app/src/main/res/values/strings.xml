@@ -1,13 +1,17 @@
 <resources>
     <string name="app_name">Parkify</string>
     <string-array name="array_disponibilita">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+        <item>Non lo so</item>
+        <item>Zero</item>
+        <item>Poca</item>
+        <item>Variabile</item>
+        <item>Molta</item>
+        <item>Piena</item>
     </string-array>
     <string name="registration_link"><u>Nuovo utente? Registrati</u></string>
     <string name="login_link"><u>Già iscritto? Accedi</u></string>
     <string name="title_activity_homepage">Homepage</string>
+    <string name="i_parcheggi_verdi_sono_gratuiti">I parcheggi <b><font color='#88c543'>verdi</font></b> sono <b>Gratuiti</b></string>
+    <string name="i_parcheggi_rossi_sono_a_pagamento">I parcheggi <b><font color='#AD1212'>rossi</font></b> sono a <b>Pagamento</b></string>
+    <string name="textHom1">Ogni <b>segnalino</b> nella mappa\ncorrisponde a un\'<b>area di parcheggio</b>.</string>
 </resources>

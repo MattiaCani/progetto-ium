@@ -21,11 +21,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="Riassunto valutazione"
+                android:layout_marginTop="20dp"
+                android:text="Affollamento"
                 android:textColor="@color/black"
-                android:textSize="45sp"
-                android:padding="5dp"/>
+                android:textSize="35sp"
+                android:padding="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -277,7 +277,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"/>
 
-            <Button
+            <com.skydoves.elasticviews.ElasticButton
                 android:id="@+id/bottoneConfermaRecap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -287,9 +287,13 @@
                 android:padding="15dp"
 
                 android:backgroundTint="@color/green"
-                android:text="Conferma"
+                android:text="CONFERMA"
+                android:textColor="@color/white"
 
-                android:textSize="40sp" />
+                android:textSize="40sp"
+                app:button_cornerRadius="4dp"
+                app:button_duration="250"
+                app:button_scale="0.87"/>
 
         </LinearLayout>
 

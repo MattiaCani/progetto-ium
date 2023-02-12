@@ -15,14 +15,14 @@ public class Parcheggio implements Serializable{
     private boolean free;
     private int numValutazioni;
 
-    private Float sMattina, sSera, sNotte;
-    private Float fsMattina, fsSera, fsNotte;
+    private Disp sMattina, sSera, sNotte;
+    private Disp fsMattina, fsSera, fsNotte;
     private Float ratingSicurezza;
     private List<String> commenti;
 
     public Parcheggio(){}
 
-    public Parcheggio(String nomeParcheggio, int idParcheggio, Float latitudine, Float longitudine, boolean free, int numValutazioni, Float sMattina, Float sSera, Float sNotte, Float fsMattina, Float fsSera, Float fsNotte, Float ratingSicurezza, List<String> commenti) {
+    public Parcheggio(String nomeParcheggio, int idParcheggio, Float latitudine, Float longitudine, boolean free, int numValutazioni, Disp sMattina, Disp sSera, Disp sNotte, Disp fsMattina, Disp fsSera, Disp fsNotte, Float ratingSicurezza, List<String> commenti) {
         this.nomeParcheggio = nomeParcheggio;
         this.idParcheggio = idParcheggio;
         this.latitudine = latitudine;
@@ -38,6 +38,8 @@ public class Parcheggio implements Serializable{
         this.ratingSicurezza = ratingSicurezza;
         this.commenti = commenti;
     }
+
+
 
     public String getNomeParcheggio() {
         return nomeParcheggio;
@@ -87,51 +89,51 @@ public class Parcheggio implements Serializable{
         this.numValutazioni = numValutazioni;
     }
 
-    public Float getsMattina() {
+    public Disp getsMattina() {
         return sMattina;
     }
 
-    public void setsMattina(Float sMattina) {
+    public void setsMattina(Disp sMattina) {
         this.sMattina = sMattina;
     }
 
-    public Float getsSera() {
+    public Disp getsSera() {
         return sSera;
     }
 
-    public void setsSera(Float sSera) {
+    public void setsSera(Disp sSera) {
         this.sSera = sSera;
     }
 
-    public Float getsNotte() {
+    public Disp getsNotte() {
         return sNotte;
     }
 
-    public void setsNotte(Float sNotte) {
+    public void setsNotte(Disp sNotte) {
         this.sNotte = sNotte;
     }
 
-    public Float getFsMattina() {
+    public Disp getFsMattina() {
         return fsMattina;
     }
 
-    public void setFsMattina(Float fsMattina) {
+    public void setFsMattina(Disp fsMattina) {
         this.fsMattina = fsMattina;
     }
 
-    public Float getFsSera() {
+    public Disp getFsSera() {
         return fsSera;
     }
 
-    public void setFsSera(Float fsSera) {
+    public void setFsSera(Disp fsSera) {
         this.fsSera = fsSera;
     }
 
-    public Float getFsNotte() {
+    public Disp getFsNotte() {
         return fsNotte;
     }
 
-    public void setFsNotte(Float fsNotte) {
+    public void setFsNotte(Disp fsNotte) {
         this.fsNotte = fsNotte;
     }
 

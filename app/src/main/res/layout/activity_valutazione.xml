@@ -20,11 +20,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="10dp"
+                android:gravity="center"
                 android:text="Disponibilità"
                 android:textColor="@color/black"
-                android:textSize="45sp" />
+                android:textSize="35sp" />
 
             <RadioGroup
                 android:id="@+id/toggle"
@@ -464,7 +465,7 @@
                 android:inputType="textMultiLine|textAutoCorrect"
                 android:textSize="20sp"/>
 
-            <Button
+            <com.skydoves.elasticviews.ElasticButton
                 android:id="@+id/bottoneConferma"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -473,10 +474,14 @@
                 android:layout_marginVertical="25dp"
                 android:padding="15dp"
 
-                android:backgroundTint="@color/black"
-                android:text="Valuta\nParcheggio"
+                android:background="@drawable/gradient_buttons"
+                android:text="VALUTA\nPARCHEGGIO"
+                android:textColor="@color/white"
 
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                app:button_cornerRadius="4dp"
+                app:button_duration="250"
+                app:button_scale="0.87"/>
 
         </LinearLayout>
 

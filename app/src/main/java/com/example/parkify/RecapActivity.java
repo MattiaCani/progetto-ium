@@ -5,8 +5,10 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -62,20 +64,22 @@ public class RecapActivity extends AppCompatActivity {
         //Collegamento al database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("Parkify", MODE_PRIVATE);
+
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
 
         //Cambia il testo e il colore della actionbar
         if (actionBar != null) {
-            actionBar.setTitle("Modifica valutazione");
-            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF000000")));
+            actionBar.setTitle("Riassunto valutazione");
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue_primary)));
         }
 
         //Cambia il colore della barra di notifiche
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.parseColor("#FF000000"));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.blue_primary));
         }
 
         //Mostra un pulsante di ritorno nella actionbar
@@ -106,6 +110,18 @@ public class RecapActivity extends AppCompatActivity {
             valutazioneUtente = (Valutazione) obj0;
         else
             valutazioneUtente = new Valutazione();
+
+        String loggedUser = sharedPreferences.getString("USER", "");
+
+        DocumentReference docRef = db.collection("utente").document(loggedUser);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Person utente = documentSnapshot.toObject(Person.class);
+
+                valutazioneUtente.setUtente(utente);
+            }
+        });
 
         updateTextViews();
 
@@ -147,12 +163,12 @@ public class RecapActivity extends AppCompatActivity {
                         DocumentReference nuovo = db.collection("parcheggio").document(String.valueOf(valutazioneUtente.getIdParcheggio()));
                         nuovo.update("ratingSicurezza", sum/num,
                                         "commenti", commenti,
-                                        "sMattina", updateDisp(pV.getsMattina(), pV.getNumValutazioni(), valutazioneUtente.getsMattina()),
-                                        "sSera", updateDisp(pV.getsSera(), pV.getNumValutazioni(), valutazioneUtente.getsSera()),
-                                        "sNotte", updateDisp(pV.getsNotte(), pV.getNumValutazioni(), valutazioneUtente.getsNotte()),
-                                        "fsMattina", updateDisp(pV.getFsMattina(), pV.getNumValutazioni(), valutazioneUtente.getFsMattina()),
-                                        "fsSera", updateDisp(pV.getFsSera(), pV.getNumValutazioni(), valutazioneUtente.getFsSera()),
-                                        "fsNotte", updateDisp(pV.getFsNotte(), pV.getNumValutazioni(), valutazioneUtente.getFsNotte()),
+                                        "sMattina", updateDisp(pV.getsMattina().getMedia(), pV.getsMattina().getNumVal(), valutazioneUtente.getsMattina()),
+                                        "sSera", updateDisp(pV.getsSera().getMedia(), pV.getsSera().getNumVal(), valutazioneUtente.getsSera()),
+                                        "sNotte", updateDisp(pV.getsNotte().getMedia(), pV.getsNotte().getNumVal(), valutazioneUtente.getsNotte()),
+                                        "fsMattina", updateDisp(pV.getFsMattina().getMedia(), pV.getFsMattina().getNumVal(), valutazioneUtente.getFsMattina()),
+                                        "fsSera", updateDisp(pV.getFsSera().getMedia(), pV.getFsSera().getNumVal(), valutazioneUtente.getFsSera()),
+                                        "fsNotte", updateDisp(pV.getFsNotte().getMedia(), pV.getFsNotte().getNumVal(), valutazioneUtente.getFsNotte()),
                                         "numValutazioni", num)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -194,14 +210,14 @@ public class RecapActivity extends AppCompatActivity {
 
     //Aggiorna i dati delle textview di recap
     void updateTextViews(){
-        spinner_sMattina.setText(String.valueOf(valutazioneUtente.getsMattina()));
-        spinner_fsMattina.setText(String.valueOf(valutazioneUtente.getFsMattina()));
+        spinner_sMattina.setText(chooseSpinnerText(valutazioneUtente.getsMattina()));
+        spinner_fsMattina.setText(chooseSpinnerText(valutazioneUtente.getFsMattina()));
 
-        spinner_sSera.setText(String.valueOf(valutazioneUtente.getsSera()));
-        spinner_fsSera.setText(String.valueOf(valutazioneUtente.getFsSera()));
+        spinner_sSera.setText(chooseSpinnerText(valutazioneUtente.getsSera()));
+        spinner_fsSera.setText(chooseSpinnerText(valutazioneUtente.getFsSera()));
 
-        spinner_sNotte.setText(String.valueOf(valutazioneUtente.getsNotte()));
-        spinner_fsNotte.setText(String.valueOf(valutazioneUtente.getFsNotte()));
+        spinner_sNotte.setText(chooseSpinnerText(valutazioneUtente.getsNotte()));
+        spinner_fsNotte.setText(chooseSpinnerText(valutazioneUtente.getFsNotte()));
 
         ratingSicurezzaResult.setStepSize((float) 0.5);
         ratingSicurezzaResult.setRating(valutazioneUtente.getRatingSicurezza());
@@ -209,7 +225,34 @@ public class RecapActivity extends AppCompatActivity {
     }
 
     //Aggiorna i dati della disponibilità
-    Float updateDisp(Float value1, int num, int value2){
-        return (value1 * num + value2) / (num + 1);
+    Disp updateDisp(Float value1, int num, int value2){
+        Float media = value1;
+
+        if(value2 != 0) {
+            media = (value1 * num + value2) / (num + 1);
+            num = num + 1;
+        }
+
+        return new Disp(media, num);
+    }
+
+    //Setta la stringa in base al numero
+    String chooseSpinnerText(Integer media){
+        String text;
+
+        if(media <= 0)
+            text = "Non lo so";
+        else if(media <= 1)
+            text = "Zero";
+        else if (media <=2)
+            text = "Poca";
+        else if (media <=3)
+            text = "Variabile";
+        else if (media <= 4)
+            text = "Molta";
+        else
+            text = "Piena";
+
+        return text;
     }
 }

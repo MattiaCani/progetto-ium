@@ -23,18 +23,110 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/blue_900"
-                    android:layout_margin="10dp">
+                    android:layout_height="wrap_content">
 
-                    <com.example.parkify.CustomMapView
-                        android:id="@+id/map"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/inverted_gradient">
+
+                        <com.example.parkify.CustomMapView
+                            android:id="@+id/map"
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp" />
+
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/tutorialBox"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/benvenuto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Benvenuto!"
+                        android:paddingVertical="5dp"
+                        android:textSize="35dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/grey_700" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="3dp"
+                        android:text="@string/textHom1"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="3dp"
+                        android:text="Usualmente queste aree prendono\nil nome della via in cui si trovano."
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/grey_700" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="3dp"
+                        android:text="Utilizza la mappa interattiva per trovare il\nparcheggio e visualizzarne le informazioni."
+                        android:layout_marginHorizontal="5dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingTop="3dp"
+                        android:text="@string/i_parcheggi_verdi_sono_gratuiti"
+                        android:layout_marginHorizontal="5dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="3dp"
+                        android:text="@string/i_parcheggi_rossi_sono_a_pagamento"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,13 +142,12 @@
                         android:id="@+id/nomeParcheggio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="3dp"
                         android:text="Nome parcheggio"
-                        android:layout_marginHorizontal="5dp"
+                        android:paddingVertical="5dp"
                         android:textSize="35dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/white" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -66,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="3dp"
-                        android:text="Disponibilità"
+                        android:text="Disponibilità parcheggio"
                         android:layout_marginHorizontal="5dp"
                         android:textSize="28dp"
                         android:layout_gravity="center"
@@ -110,12 +201,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="10dp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/black"
                                     android:gravity="center"
                                     android:padding="10dp"
                                     android:text="Settimana"
                                     android:textSize="20sp"
-                                    android:background="@drawable/bordo_bianco">
+                                    android:background="@drawable/bordo_nero_centro_grigio">
 
                                 </TextView>
 
@@ -125,10 +216,10 @@
                                     android:text="Fine\nSettimana"
                                     android:paddingVertical="5dp"
                                     android:paddingHorizontal="10dp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
                                     android:gravity="center"
-                                    android:background="@drawable/bordo_bianco">
+                                    android:background="@drawable/bordo_nero_centro_grigio">
 
                                 </TextView>
 
@@ -147,9 +238,9 @@
 
                                     android:text="Mattina"
                                     android:padding="5dp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
-                                    android:background="@drawable/bordo_bianco" />
+                                    android:background="@drawable/bordo_nero_centro_grigio"/>
 
                                 <TextView
                                     android:id="@+id/s_dispMattinaResult"
@@ -187,11 +278,10 @@
                                     android:layout_height="match_parent"
 
                                     android:gravity="center"
-
                                     android:text="Sera"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
-                                    android:background="@drawable/bordo_bianco" />
+                                    android:background="@drawable/bordo_nero_centro_grigio"/>
 
                                 <TextView
                                     android:id="@+id/s_dispSeraResult"
@@ -231,9 +321,9 @@
                                     android:gravity="center"
 
                                     android:text="Notte"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
-                                    android:background="@drawable/bordo_bianco" />
+                                    android:background="@drawable/bordo_nero_centro_grigio"/>
 
                                 <TextView
                                     android:id="@+id/s_dispNotteResult"
@@ -302,21 +392,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
-                    <Button
+                    <com.skydoves.elasticviews.ElasticButton
                         android:layout_width="200dp"
                         android:layout_height="70dp"
                         android:id="@+id/buttonAggiungiValutazione"
-                        android:text="Aggiungi una valutazione"
-                        android:textSize="15dp"
+                        android:text="AGGIUNGI UNA\nVALUTAZIONE"
+                        android:textSize="25sp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:backgroundTint="@color/blue_900"/>
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/gradient_buttons"
+                        android:textColor="@color/white"
+                        app:button_cornerRadius="4dp"
+                        app:button_duration="250"
+                        app:button_scale="0.87"/>
+
+                    <com.skydoves.elasticviews.ElasticButton
+                        android:id="@+id/caricaCommenti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Carica commenti degli utenti"
+                        android:paddingVertical="5dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="25dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@color/blue_transparent"
+                        android:paddingHorizontal="10dp"
+                        app:button_cornerRadius="4dp"
+                        app:button_duration="250"
+                        app:button_scale="0.87"/>
 
                 </LinearLayout>
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="35dp"
+                    android:layout_marginBottom="80dp"
+                    android:id="@+id/commentBox"
+                    android:background="@drawable/rounded_nero"
+                    android:visibility="invisible">
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -327,12 +448,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="30dp"
             app:menu="@menu/nav_item_menu"
             app:itemIconSize="30dp"
             android:id="@+id/navBar"
-            android:background="@drawable/colori_navbar"/>
+            android:background="@drawable/colori_navbar"
+            app:itemTextColor="@drawable/navigation_view_color"
+            app:itemIconTint="@drawable/navigation_view_color"/>
 
     </RelativeLayout>
 

@@ -3,10 +3,12 @@ package com.example.parkify;
 import static android.content.ContentValues.TAG;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 
 import android.app.Activity;
@@ -16,11 +18,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,10 +37,13 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.AggregateQuery;
 import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -58,7 +66,9 @@ public class ValutazioneActivity extends AppCompatActivity {
     Button bottoneConferma;
 
     Valutazione valutazioneUtente;
-    Parcheggio infoParcheggio;
+
+    String nomeParcheggio;
+    Integer idParcheggio;
 
     @Override
     protected void onResume() {
@@ -83,15 +93,15 @@ public class ValutazioneActivity extends AppCompatActivity {
 
         //Cambia il testo e il colore della actionbar
         if (actionBar != null) {
-            actionBar.setTitle("Interrompi valutazione");
-            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF000000")));
+            actionBar.setTitle("Inserisci la valutazione");
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue_primary)));
         }
 
         //Cambia il colore della barra di notifiche
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.parseColor("#FF000000"));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.blue_primary));
         }
 
         //Mostra un pulsante di ritorno nella actionbar
@@ -105,14 +115,56 @@ public class ValutazioneActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
+                Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+
+                slideOut.setDuration(150);
+                slideIn.setDuration(150);
+
                 switch (checkedId) {
                     case R.id.settimana:
-                        settimanaSpinners.setVisibility(View.VISIBLE);
-                        fineSettimanaSpinners.setVisibility(View.GONE);
+                        fineSettimanaSpinners.startAnimation(slideOut);
+
+                        slideOut.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                fineSettimanaSpinners.setVisibility(View.GONE);
+                                settimanaSpinners.startAnimation(slideIn);
+                                settimanaSpinners.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
                         break;
                     case R.id.fineSettimana:
-                        settimanaSpinners.setVisibility(View.GONE);
-                        fineSettimanaSpinners.setVisibility(View.VISIBLE);
+                        settimanaSpinners.startAnimation(slideOut);
+
+                        slideOut.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                settimanaSpinners.setVisibility(View.GONE);
+                                fineSettimanaSpinners.startAnimation(slideIn);
+                                fineSettimanaSpinners.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
                         break;
                 }
             }
@@ -120,15 +172,21 @@ public class ValutazioneActivity extends AppCompatActivity {
 
         //Recupera i dati sul nome e id parcheggio
         Intent intent = getIntent();
-        Serializable obj = intent.getSerializableExtra(HomepageActivity.HOMEPAGE_EXTRA);
+        Serializable obj0 = intent.getSerializableExtra(HomepageActivity.HOMEPAGE_EXTRA0);
+        Serializable obj1 = intent.getSerializableExtra(HomepageActivity.HOMEPAGE_EXTRA1);
 
-        if(obj instanceof Parcheggio)
-            infoParcheggio = (Parcheggio) obj;
+        if(obj0 instanceof Integer)
+            idParcheggio = (Integer) obj0;
         else
-            infoParcheggio = new Parcheggio();
+            idParcheggio = 0;
 
-        valutazioneUtente.setNomeParcheggio(infoParcheggio.getNomeParcheggio());
-        valutazioneUtente.setIdParcheggio(infoParcheggio.getIdParcheggio());
+        if(obj1 instanceof String)
+            nomeParcheggio = (String) obj1;
+        else
+            nomeParcheggio = "";
+
+        valutazioneUtente.setNomeParcheggio(nomeParcheggio);
+        valutazioneUtente.setIdParcheggio(idParcheggio);
 
         //Inserimento dei dati nello spinner e specifica del layout
         spinner_sMattina = findViewById(R.id.s_dispMattina);
@@ -189,22 +247,22 @@ public class ValutazioneActivity extends AppCompatActivity {
 
     //Aggiorna i dati della valutazione
     void updateValutazione (){
-        int spinner_sMattina = Integer.parseInt(this.spinner_sMattina.getSelectedItem().toString());
+        int spinner_sMattina = chooseSpinnerValue(this.spinner_sMattina.getSelectedItem().toString());
         this.valutazioneUtente.setsMattina(spinner_sMattina);
 
-        int spinner_fsMattina = Integer.parseInt(this.spinner_fsMattina.getSelectedItem().toString());
+        int spinner_fsMattina = chooseSpinnerValue(this.spinner_fsMattina.getSelectedItem().toString());
         this.valutazioneUtente.setFsMattina(spinner_fsMattina);
 
-        int spinner_sSera = Integer.parseInt(this.spinner_sSera.getSelectedItem().toString());
+        int spinner_sSera = chooseSpinnerValue(this.spinner_sSera.getSelectedItem().toString());
         this.valutazioneUtente.setsSera(spinner_sSera);
 
-        int spinner_fsSera = Integer.parseInt(this.spinner_fsSera.getSelectedItem().toString());
+        int spinner_fsSera = chooseSpinnerValue(this.spinner_fsSera.getSelectedItem().toString());
         this.valutazioneUtente.setFsSera(spinner_fsSera);
 
-        int spinner_sNotte = Integer.parseInt(this.spinner_sNotte.getSelectedItem().toString());
+        int spinner_sNotte = chooseSpinnerValue(this.spinner_sNotte.getSelectedItem().toString());
         this.valutazioneUtente.setsNotte(spinner_sNotte);
 
-        int spinner_fsNotte = Integer.parseInt(this.spinner_fsNotte.getSelectedItem().toString());
+        int spinner_fsNotte = chooseSpinnerValue(this.spinner_fsNotte.getSelectedItem().toString());
         this.valutazioneUtente.setFsNotte(spinner_fsNotte);
 
         String commento = this.commento.getText().toString();
@@ -212,5 +270,24 @@ public class ValutazioneActivity extends AppCompatActivity {
 
         Float rating = this.ratingSicurezza.getRating();
         this.valutazioneUtente.setRatingSicurezza(rating);
+    }
+
+    //Sceglie il numero dello spinner in base al valore
+    Integer chooseSpinnerValue(String text){
+
+        switch (text) {
+            case "Zero":
+                return 1;
+            case "Poca":
+                return 2;
+            case "Variabile":
+                return 3;
+            case "Molta":
+                return 4;
+            case "Piena":
+                return 5;
+        }
+
+        return 0;
     }
 }

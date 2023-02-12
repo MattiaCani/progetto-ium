@@ -31,5 +31,6 @@
     <color name="blue_secondary">#832fc3</color>
     <color name="grey_transparent">#72CDCDCD</color>
     <color name="blue_transparent">#995159CF</color>
+    <color name="green_logo">#88c543</color>
 
 </resources>

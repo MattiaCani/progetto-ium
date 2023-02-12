@@ -2,12 +2,16 @@ package com.example.parkify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -36,6 +40,13 @@ public class PaginaPersonaleActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Parkify", MODE_PRIVATE);
 
         getSupportActionBar().hide();
+
+        //Cambia il colore della statusbar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.blue_primary));
+        }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

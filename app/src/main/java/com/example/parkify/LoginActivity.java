@@ -13,9 +13,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -72,13 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //background dinamico
-        ConstraintLayout constraintLayout = findViewById(R.id.loginLayout);
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2500);
-        animationDrawable.setExitFadeDuration(5000);
-        animationDrawable.start();
-
         //Imposta di default la modalità giorno
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
@@ -99,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         //Chiamata della actionbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
 
         //Cambia il colore della statusbar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -176,13 +173,49 @@ public class LoginActivity extends AppCompatActivity {
 
                             } else {
                                 errorText.setVisibility(View.VISIBLE);
-                                errorText.setText("Credenziali non esistenti");
+                                errorText.setText("Account non esistente");
                                 loginButton.setClickable(true);
                                 progressBar.setVisibility(View.GONE);
                             }
                         }
                     });
                 }
+            }
+        });
+
+        editUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // This method is called before the text is changed.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(editUsername.toString().length() != 0)
+                    usernameError.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This method is called after the text is changed.
+            }
+        });
+
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // This method is called before the text is changed.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(editPassword.toString().length() != 0)
+                    passwordError.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This method is called after the text is changed.
             }
         });
 
