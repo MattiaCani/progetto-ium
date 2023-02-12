@@ -7,6 +7,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -84,6 +86,8 @@ public class RecapActivity extends AppCompatActivity {
 
         //Mostra un pulsante di ritorno nella actionbar
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialogThemeSuccess);
 
         //Recupero dei dati
         spinner_sMattina = findViewById(R.id.s_dispMattinaResult);
@@ -186,13 +190,26 @@ public class RecapActivity extends AppCompatActivity {
                 });
 
                 //Reindirizza a quale activity ????
-                Intent paginaHome = new Intent(RecapActivity.this, HomepageActivity.class);
-                paginaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                paginaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                paginaHome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                paginaHome.putExtra("EXIT", true);
-                startActivity(paginaHome);
-                finish();
+                builder.setMessage("Verrai reindirizzato alla Mappa")
+                        .setTitle("Valutazione inserita con successo");
+
+                builder.setNeutralButton("Ho capito", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent paginaHome = new Intent(RecapActivity.this, HomepageActivity.class);
+                        paginaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        paginaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        paginaHome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        paginaHome.putExtra("EXIT", true);
+                        startActivity(paginaHome);
+                        finish();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
             }
         });
     }

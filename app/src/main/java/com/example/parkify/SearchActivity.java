@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Rating;
 import android.os.Build;
@@ -36,7 +38,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.mapsforge.map.rendertheme.renderinstruction.Line;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
 
     SearchView searchView;
     RecyclerView searchResult;
+    TextView errorSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +70,17 @@ public class SearchActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         // Find the BottomNavigationView and set up the listener
         navigationView = findViewById(R.id.navBar);
         navigationView.setSelectedItemId(R.id.nav_search);
 
         searchView = findViewById(R.id.searchView);
         searchResult = findViewById(R.id.searchResults);
+
+        searchResult.setLayoutManager(new LinearLayoutManager(this));
+        errorSearch = findViewById(R.id.errorSearch);
 
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,31 +92,32 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                errorSearch.setVisibility(View.GONE);
                 searchResult.removeAllViews();
+                searchResult.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.rounded_nero));
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("parcheggio")
-                        .whereEqualTo("nomeParcheggio", "Piazza Unione Sarda")
+                db.collection("parcheggio").orderBy("nomeParcheggio")
+                        .startAt(searchView.getQuery().toString())
+                        .endAt(searchView.getQuery().toString() + "\uf8ff")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                List<Parcheggio> lp = new ArrayList<>();
+
                                 if (task.isSuccessful()) {
-                                    View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.parcheggio_ricerca, searchResult, false);
-                                    searchResult.addView(view);
-
-                                    TextView nome = view.findViewById(R.id.text_view_name);
-                                    RatingBar ratingBar = view.findViewById(R.id.raating);
-
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Parcheggio p = document.toObject(Parcheggio.class);
-
-                                        nome.setText(p.getNomeParcheggio());
-                                        ratingBar.setRating(p.getRatingSicurezza());
+                                        lp.add(p);
                                     }
 
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                    if(lp.isEmpty())
+                                        errorSearch.setVisibility(View.VISIBLE);
+
+                                    MyAdapter adapter = new MyAdapter(lp);
+                                    searchResult.setAdapter(adapter);
+
                                 }
                             }
                         });

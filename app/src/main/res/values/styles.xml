@@ -10,4 +10,11 @@
     <style name="SearchViewStyle">
         <item name="android:editTextColor">@color/white</item>
     </style>
+
+    <style name="CustomDialogThemeError" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/red_error</item>
+    </style>
+    <style name="CustomDialogThemeSuccess" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/green_succes</item>
+    </style>
 </resources>

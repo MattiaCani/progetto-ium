@@ -123,7 +123,8 @@ public class SignInActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builderError = new AlertDialog.Builder(this, R.style.CustomDialogThemeError);
+        AlertDialog.Builder builderSuccess = new AlertDialog.Builder(this, R.style.CustomDialogThemeSuccess);
 
         person = new Person();
         person.setPicId(2);
@@ -167,21 +168,35 @@ public class SignInActivity extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                finish();
+                                                builderSuccess.setMessage("Verrai reindirizzato alla pagina di Login per inserire le tue credenziali")
+                                                        .setTitle("La registrazione è avvenuta con successo");
+
+                                                builderSuccess.setNeutralButton("Ho capito", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        finish();
+                                                    }
+                                                });
+
+                                                AlertDialog dialog = builderSuccess.create();
+                                                dialog.setCanceledOnTouchOutside(false);
+                                                dialog.show();
                                             }
                                         });
                             } else {
-                                builder.setMessage("Perfavore inserire un username diverso")
+                                builderError.setMessage("Perfavore inserire un username diverso")
                                         .setTitle("L'username \"" + person.getUsername() + "\" è già stato preso");
 
-                                builder.setPositiveButton("Ho capito", new DialogInterface.OnClickListener() {
+                                builderError.setNeutralButton("Ho capito", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
                                     }
                                 });
 
-                                AlertDialog dialog = builder.create();
+                                AlertDialog dialog = builderError.create();
+                                dialog.setCanceledOnTouchOutside(false);
                                 dialog.show();
 
                                 regbutton.setClickable(true);
