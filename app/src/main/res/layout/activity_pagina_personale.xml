@@ -138,7 +138,7 @@
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="55dp"/>
+                    android:layout_height="30dp"/>
 
                 <com.skydoves.elasticviews.ElasticButton
                     android:id="@+id/logoutButton"
@@ -153,6 +153,10 @@
                     app:button_cornerRadius="4dp"
                     app:button_duration="250"
                     app:button_scale="0.87"/>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"/>
 
             </LinearLayout>
 

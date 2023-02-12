@@ -363,8 +363,6 @@ public class HomepageActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-
             }
         });
 

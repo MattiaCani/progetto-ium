@@ -10,6 +10,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/barra_ricerca">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/searchView"
+                        android:queryHint="Inserisci nome parcheggio"
+                        android:iconifiedByDefault="false"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:queryHint="Cerca un parcheggio"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/searchResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/rounded_nero"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="100dp">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

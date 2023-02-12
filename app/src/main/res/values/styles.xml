@@ -6,4 +6,8 @@
     <style name="errorStyle">
         <item name="android:textSize">22sp</item>
     </style>
+
+    <style name="SearchViewStyle">
+        <item name="android:editTextColor">@color/white</item>
+    </style>
 </resources>
