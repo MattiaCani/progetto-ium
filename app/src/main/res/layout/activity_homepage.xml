@@ -394,7 +394,8 @@
 
                     <com.skydoves.elasticviews.ElasticButton
                         android:layout_width="200dp"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
                         android:id="@+id/buttonAggiungiValutazione"
                         android:text="AGGIUNGI UNA\nVALUTAZIONE"
                         android:textSize="25sp"

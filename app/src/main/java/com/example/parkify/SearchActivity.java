@@ -98,8 +98,8 @@ public class SearchActivity extends AppCompatActivity {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("parcheggio").orderBy("nomeParcheggio")
-                        .startAt(searchView.getQuery().toString())
-                        .endAt(searchView.getQuery().toString() + "\uf8ff")
+                        .startAt(searchView.getQuery().toString().substring(0,1).toUpperCase() + searchView.getQuery().toString().substring(1))
+                        .endAt(searchView.getQuery().toString().substring(0,1).toUpperCase() + searchView.getQuery().toString().substring(1) + "\uf8ff")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
