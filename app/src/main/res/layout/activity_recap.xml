@@ -22,7 +22,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Affollamento"
+                android:text="Disponibilità"
                 android:textColor="@color/black"
                 android:textSize="35sp"
                 android:padding="10dp"/>
